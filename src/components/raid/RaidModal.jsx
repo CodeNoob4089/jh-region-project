@@ -109,6 +109,10 @@ function RaidModal({ raid, onClose, onApplied }) {
       if (onApplied) {
         await onApplied();
       }
+
+      if (onClose) {
+        onClose();
+      }
     } catch (error) {
       console.error("공격대 신청 실패:", error.message);
       toast.error("공격대 신청 중 오류가 발생했습니다.");
@@ -143,6 +147,10 @@ function RaidModal({ raid, onClose, onApplied }) {
 
       if (onApplied) {
         await onApplied();
+      }
+
+      if (onClose) {
+        onClose();
       }
     } catch (error) {
       console.error("공격대 신청 취소 실패:", error.message);

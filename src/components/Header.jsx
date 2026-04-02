@@ -67,9 +67,14 @@ function Header({ user }) {
   return (
     <header className="app-header">
       <div className="app-header-inner">
-        <Link to="/" className="app-logo" aria-label="홈으로 이동">
-          <img src={logo} alt="JH 로고" className="app-logo-image" />
-        </Link>
+<Link
+  to="/"
+  state={{ refreshHome: Date.now() }}
+  className="app-logo"
+  aria-label="홈으로 이동"
+>
+  <img src={logo} alt="JH 로고" className="app-logo-image" />
+</Link>
 
         <div className="app-header-right">
           {user ? (

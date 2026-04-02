@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import Layout from "../layout/Layout";
 import useRaids from "../hooks/useRaids";
@@ -29,6 +30,7 @@ function formatDateWithDay(dateString) {
 
 function HomePage() {
   const { user } = useAuthContext();
+  const location = useLocation();
   const { raids, loading, refetchRaids } = useRaids();
   const { myApplications } = useMyApplications(user);
   const [selectedRaid, setSelectedRaid] = useState(null);
@@ -67,6 +69,19 @@ function HomePage() {
     };
   }, [raids, myAppliedRaidIds]);
 
+  useEffect(() => {
+    if (!location.state?.refreshHome) return;
+
+    setSelectedRaid(null);
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+
+    refetchRaids?.();
+  }, [location.state, refetchRaids]);
+
   const handleRaidClick = (raid, isDisabled) => {
     if (isDisabled) {
       return;
@@ -84,7 +99,7 @@ function HomePage() {
     return (
       <Layout>
         <div className="raid-page">
-          <div className="raid-loading-card">레이드 불러오는 중...</div>
+          <div className="raid-loading-card">레이드 불러오는 중.</div>
         </div>
       </Layout>
     );
@@ -124,7 +139,6 @@ function HomePage() {
                     <div className="raid-section-overline">RAID CATEGORY</div>
                     <div className="raid-section-label">{title}</div>
                   </div>
-
                 </div>
 
                 <div className="raid-time-grid">

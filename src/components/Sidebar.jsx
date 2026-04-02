@@ -53,16 +53,17 @@ function Sidebar({ user, isOpen, onClose }) {
             <div className="app-sidebar-title">메뉴</div>
 
             <nav className="app-sidebar-nav">
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) =>
-                  `app-sidebar-link ${isActive ? "is-active" : ""}`
-                }
-                onClick={onClose}
-              >
-                홈
-              </NavLink>
+<NavLink
+  to="/"
+  end
+  state={{ refreshHome: Date.now() }}
+  className={({ isActive }) =>
+    `app-sidebar-link ${isActive ? "is-active" : ""}`
+  }
+  onClick={onClose}
+>
+  홈
+</NavLink>
 
               <NavLink
                 to="/raids"
