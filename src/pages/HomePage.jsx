@@ -125,9 +125,6 @@ function HomePage() {
                     <div className="raid-section-label">{title}</div>
                   </div>
 
-                  <div className="raid-section-count">
-                    {sectionRaids.length}개 시간대
-                  </div>
                 </div>
 
                 <div className="raid-time-grid">
