@@ -1,0 +1,681 @@
+.my-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.my-page-loading {
+  padding: 28px 0;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.my-page-locked-card {
+  padding: 24px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.my-page-locked-title {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.my-page-locked-text {
+  margin-top: 10px;
+  color: #667085;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* hero */
+.my-hero-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top left, rgba(88, 101, 242, 0.28), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(99, 102, 241, 0.18), transparent 28%),
+    linear-gradient(135deg, #0f172a 0%, #111827 42%, #1f2937 100%);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+}
+
+.my-hero-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.my-hero-avatar-frame {
+  flex-shrink: 0;
+  padding: 4px;
+  border-radius: 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(224, 231, 255, 0.5)
+  );
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.my-hero-avatar {
+  width: 86px;
+  height: 86px;
+  border-radius: 18px;
+  object-fit: cover;
+  background: #ffffff;
+}
+
+.my-hero-avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+}
+
+.my-hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.my-hero-overline {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.my-hero-title {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.my-hero-subtitle {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.my-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.my-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.my-chip.is-online {
+  background: rgba(34, 197, 94, 0.14);
+  color: #dcfce7;
+}
+
+.my-chip-light {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: #22c55e;
+  box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12);
+}
+
+.my-hero-right {
+  width: 300px;
+  max-width: 100%;
+  display: flex;
+}
+
+.my-stat-card {
+  width: 100%;
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.my-stat-card.main {
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  box-shadow: 0 14px 30px rgba(79, 70, 229, 0.24);
+}
+
+.my-stat-label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.my-stat-value {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.my-stat-sub {
+  margin-top: 8px;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.my-stat-divider {
+  margin: 0 8px;
+  opacity: 0.8;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.my-stat-power {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.38),
+    0 0 10px rgba(255, 255, 255, 0.08);
+}
+
+/* 대표 카드 안 전투력은 더 밝게 보정 */
+.my-stat-card.main .my-job-pill {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+.my-stat-card.main .tier-1 {
+  color: #e5e7eb;
+}
+
+.my-stat-card.main .tier-2 {
+  color: #86efac;
+}
+
+.my-stat-card.main .tier-3 {
+  color: #67e8f9;
+}
+
+.my-stat-card.main .tier-4 {
+  color: #93c5fd;
+}
+
+.my-stat-card.main .tier-5 {
+  color: #c4b5fd;
+}
+
+.my-stat-card.main .tier-6 {
+  color: #f9a8d4;
+}
+
+.my-stat-card.main .tier-7 {
+  color: #fdba74;
+}
+
+.my-stat-card.main .tier-8 {
+  color: #fde68a;
+}
+
+/* section */
+.my-section {
+  margin-top: 30px;
+}
+
+.my-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.my-section-header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.my-section-overline {
+  margin: 0;
+  padding: 0;
+  color: #667085;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+}
+
+.my-section-title {
+  margin: 0;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.my-section-subtitle {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+}
+
+/* buttons */
+.my-primary-button,
+.my-secondary-button,
+.my-danger-button,
+.my-accent-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+}
+
+.my-primary-button:hover,
+.my-secondary-button:hover,
+.my-danger-button:hover,
+.my-accent-button:hover {
+  transform: translateY(-1px);
+}
+
+.my-primary-button {
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(88, 101, 242, 0.22);
+}
+
+.my-secondary-button {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.my-danger-button {
+  background: #fff1f1;
+  color: #b42318;
+}
+
+.my-accent-button {
+  background: #eef2ff;
+  color: #2f3aa8;
+}
+
+.my-primary-button:disabled,
+.my-secondary-button:disabled,
+.my-danger-button:disabled,
+.my-accent-button:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+/* add form */
+.my-add-form-card {
+  padding: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  margin-bottom: 24px;
+}
+
+.my-form-grid,
+.my-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.my-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.my-form-label {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.my-form-input {
+  width: 100%;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.my-form-input:focus {
+  border-color: rgba(88, 101, 242, 0.55);
+  box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.12);
+}
+
+.my-form-actions {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* empty */
+.my-empty-card {
+  padding: 24px;
+  border: 1px dashed rgba(15, 23, 42, 0.18);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.my-empty-title {
+  color: #111827;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.my-empty-sub {
+  margin-top: 8px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* character cards */
+.my-character-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.my-character-card {
+  padding: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at top right, rgba(88, 101, 242, 0.08), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.my-character-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.1);
+}
+
+.my-character-card.is-main {
+  border-color: rgba(88, 101, 242, 0.26);
+  box-shadow: 0 16px 28px rgba(88, 101, 242, 0.12);
+}
+
+.my-character-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 14px;
+}
+
+.my-character-identity {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.my-character-name-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.my-character-name {
+  color: #111827;
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.my-character-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: #e0e7ff;
+  color: #2f3aa8;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.my-character-job {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.my-character-power-box {
+  min-width: 140px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.my-character-power-label {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.my-character-power {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.my-card-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* 공통 직업 태그 */
+.my-job-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  width: fit-content;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+/* 직업별 태그 */
+/* 직업별 태그 - 밝기 개선 버전 */
+.job-warrior {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.job-guardian {
+  background: #fff7ed;
+  color: #d97706;
+  border-color: #fed7aa;
+}
+
+.job-assassin {
+  background: #faf5ff;
+  color: #9333ea;
+  border-color: #e9d5ff;
+}
+
+.job-archer {
+  background: #f0fdf4;
+  color: #16a34a;
+  border-color: #bbf7d0;
+}
+
+.job-mage {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.job-spirit {
+  background: #f0fdfa;
+  color: #0f766e;
+  border-color: #99f6e4;
+}
+
+.job-support {
+  background: #fff7ed;
+  color: #ea580c;
+  border-color: #fdba74;
+}
+
+.job-healer {
+  background: #f0f9ff;
+  color: #0284c7;
+  border-color: #bae6fd;
+}
+
+/* 전투력 100K 단위 색상 */
+.tier-1 {
+  color: #6b7280;
+}
+
+.tier-2 {
+  color: #16a34a;
+}
+
+.tier-3 {
+  color: #0891b2;
+}
+
+.tier-4 {
+  color: #2563eb;
+}
+
+.tier-5 {
+  color: #7c3aed;
+}
+
+.tier-6 {
+  color: #db2777;
+}
+
+.tier-7 {
+  color: #ea580c;
+}
+
+.tier-8 {
+  color: #ca8a04;
+}
+
+/* responsive */
+@media (max-width: 900px) {
+  .my-hero-card {
+    flex-direction: column;
+  }
+
+  .my-hero-right {
+    width: 100%;
+  }
+
+  .my-form-grid,
+  .my-edit-grid,
+  .my-character-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-page {
+    padding-top: 28px;
+    padding-bottom: 32px;
+  }
+
+  .my-hero-title {
+    font-size: 28px;
+  }
+
+  .my-section-title {
+    font-size: 24px;
+  }
+
+  .my-section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .my-primary-button,
+  .my-secondary-button,
+  .my-danger-button,
+  .my-accent-button {
+    width: 100%;
+  }
+
+  .my-hero-left {
+    align-items: flex-start;
+  }
+
+  .my-hero-avatar {
+    width: 74px;
+    height: 74px;
+  }
+
+  .my-stat-value,
+  .my-character-power {
+    font-size: 24px;
+  }
+
+  .my-character-card-top {
+    flex-direction: column;
+  }
+
+  .my-character-power-box {
+    min-width: 0;
+  }
+
+  .my-card-actions {
+    flex-direction: column;
+  }
+}

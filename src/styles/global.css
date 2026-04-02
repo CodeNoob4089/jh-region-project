@@ -1,0 +1,1491 @@
+/* ============================= */
+/* Base */
+/* ============================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(71, 85, 247, 0.16), transparent 30%),
+    radial-gradient(circle at 18% 82%, rgba(56, 189, 248, 0.08), transparent 24%),
+    radial-gradient(circle at 82% 78%, rgba(139, 92, 246, 0.10), transparent 26%),
+    linear-gradient(180deg, #020617 0%, #081225 42%, #0a1730 100%);
+  background-attachment: fixed;
+  color: #e5e7eb;
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* ============================= */
+/* App Layout */
+/* ============================= */
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-main {
+  padding: 24px;
+  min-width: 0;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+.app-main-inner {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ============================= */
+/* Header */
+/* ============================= */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  background: rgba(6, 12, 28, 0.78);
+  border-bottom: 1px solid rgba(99, 117, 194, 0.18);
+  box-shadow: 0 8px 28px rgba(2, 6, 23, 0.22);
+}
+
+.app-header-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px 22px;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.app-logo-image {
+  display: block;
+  width: auto;
+  height: 68px;
+  object-fit: contain;
+  transform-origin: center;
+  animation: appLogoPulse 3.2s ease-in-out infinite;
+  filter:
+    drop-shadow(0 0 6px rgba(125, 211, 252, 0.30))
+    drop-shadow(0 0 12px rgba(99, 102, 241, 0.28))
+    drop-shadow(0 4px 18px rgba(2, 6, 23, 0.55));
+}
+
+.app-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  text-decoration: none;
+  color: #f8fbff;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+.app-logo-mark {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(135deg, #4f46e5 0%, #4338ca 42%, #7c3aed 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 10px 24px rgba(79, 70, 229, 0.38);
+}
+
+.app-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-auth-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 12px 18px;
+  min-height: 46px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.app-auth-button:hover {
+  transform: translateY(-1px);
+}
+
+.app-auth-button-discord {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(88, 101, 242, 0.28);
+}
+
+.app-auth-discord-icon {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.app-profile-menu {
+  position: relative;
+}
+
+.app-profile-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.app-user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 0 0 1px rgba(99, 117, 194, 0.20),
+    0 8px 18px rgba(2, 6, 23, 0.34);
+  background: #0b1220;
+}
+
+.app-user-avatar-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.app-profile-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 140px;
+  padding: 8px;
+  border: 1px solid rgba(99, 117, 194, 0.18);
+  border-radius: 16px;
+  background: rgba(10, 17, 34, 0.96);
+  box-shadow: 0 18px 36px rgba(2, 6, 23, 0.34);
+}
+.app-profile-dropdown-button {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: #fff5f5;
+  color: #b42318;
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.app-profile-dropdown-button:hover {
+  background: #ffe8e8;
+}
+
+/* ============================= */
+/* Floating Sidebar */
+/* ============================= */
+.app-floating-sidebar-toggle {
+  position: fixed;
+  top: 84px;
+  left: 16px;
+  z-index: 140;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(99, 117, 194, 0.16);
+  border-radius: 12px;
+  background: rgba(8, 15, 31, 0.92);
+  color: #e5edff;
+  font-size: 18px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(2, 6, 23, 0.30);
+  transition: transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+}
+
+.app-floating-sidebar-toggle:hover {
+  background: rgba(18, 28, 52, 0.96);
+  transform: translateY(-1px);
+}
+.app-floating-sidebar-toggle.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 119;
+  background: rgba(2, 6, 23, 0.34);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.app-sidebar-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.app-floating-sidebar {
+  position: fixed;
+  top: 84px;
+  left: 16px;
+  z-index: 130;
+  width: 220px;
+  opacity: 0;
+  transform: translateX(-18px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.app-floating-sidebar.is-open {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.app-floating-sidebar-inner {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 16px 12px;
+  border: 1px solid rgba(99, 117, 194, 0.16);
+  border-radius: 20px;
+  background:
+    linear-gradient(180deg, rgba(10, 17, 34, 0.96) 0%, rgba(8, 14, 28, 0.92) 100%);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(2, 6, 23, 0.34);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.app-floating-sidebar-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.app-sidebar-section + .app-sidebar-section {
+  margin-top: 22px;
+}
+
+.app-sidebar-title {
+  margin-bottom: 10px;
+  padding: 0 10px;
+  color: #8fa3d9;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.app-sidebar-nav {
+  display: grid;
+  gap: 6px;
+}
+
+.app-sidebar-link {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #d5def6;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.app-sidebar-link:hover {
+  background: rgba(79, 70, 229, 0.12);
+  color: #ffffff;
+}
+
+.app-sidebar-link.is-active {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.32) 0%, rgba(124, 58, 237, 0.22) 100%);
+  color: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(132, 144, 255, 0.14);
+}
+
+/* ============================= */
+/* Home Raid Layout */
+/* ============================= */
+/* ============================= */
+/* Home Raid Layout */
+/* ============================= */
+.raid-page {
+  width: 100%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.raid-container {
+  width: 100%;
+}
+
+.raid-loading-card {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 0;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.raid-home-hero {
+  max-width: 1120px;
+  margin: 0 auto 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 18px;
+  padding: 24px;
+  border-radius: 26px;
+  background:
+    radial-gradient(circle at top left, rgba(88, 101, 242, 0.24), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.16), transparent 28%),
+    linear-gradient(135deg, #0f172a 0%, #111827 42%, #1f2937 100%);
+  box-shadow: 0 20px 46px rgba(15, 23, 42, 0.2);
+}
+
+.raid-home-hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.raid-home-kicker {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.raid-home-title {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+.raid-home-title.align-left {
+  text-align: left;
+}
+
+.raid-home-subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.raid-home-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.raid-home-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.raid-home-chip.is-primary {
+  background: rgba(99, 102, 241, 0.22);
+  color: #eef2ff;
+}
+
+.raid-home-chip.is-warning {
+  background: rgba(249, 115, 22, 0.18);
+  color: #ffedd5;
+}
+
+.raid-home-hero-right {
+  width: 220px;
+  max-width: 100%;
+  display: flex;
+}
+
+.raid-home-summary-card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  box-shadow: 0 16px 32px rgba(79, 70, 229, 0.24);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.raid-home-summary-label {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+.raid-home-summary-value {
+  font-size: 36px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.raid-section {
+  max-width: 1120px;
+  margin: 0 auto 28px;
+}
+
+.raid-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.raid-section-overline {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.raid-section-label {
+  text-align: left;
+  color: #111827;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+.raid-section-count {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.raid-time-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.raid-time-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background:
+    radial-gradient(circle at top right, rgba(88, 101, 242, 0.08), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 22px;
+  min-height: 194px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.raid-time-card:hover {
+  border-color: rgba(88, 101, 242, 0.26);
+  box-shadow:
+    0 20px 36px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(88, 101, 242, 0.08),
+    0 0 22px rgba(88, 101, 242, 0.12);
+  transform: translateY(-4px) scale(1.01);
+}
+
+.raid-time-card-accent {
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #5865f2 0%, #8b5cf6 100%);
+}
+
+.raid-time-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.raid-time-card-date {
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.raid-time-card-time {
+  margin-top: 8px;
+  color: #111827;
+  font-size: 40px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.raid-time-card-members {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.raid-time-card-members-label {
+  color: #667085;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.raid-time-card-count {
+  color: #111827;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+}
+
+.raid-time-card-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.raid-time-card-badge.is-open {
+  background: #ecfdf3;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.raid-time-card-badge.is-closed {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.raid-time-card-applied {
+  border: 1px solid rgba(88, 101, 242, 0.28);
+  background:
+    radial-gradient(circle at top right, rgba(88, 101, 242, 0.12), transparent 28%),
+    linear-gradient(180deg, #eef2ff 0%, #f8faff 100%);
+  box-shadow: 0 16px 32px rgba(88, 101, 242, 0.14);
+}
+
+.raid-time-card-applied .raid-time-card-time,
+.raid-time-card-applied .raid-time-card-count {
+  color: #2f3aa8;
+}
+
+.raid-time-card-disabled {
+  background: linear-gradient(180deg, #f1f5f9 0%, #e5e7eb 100%);
+  border-color: #d0d5dd;
+  color: #8b8b8b;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.raid-time-card-disabled:hover {
+  border-color: #d0d5dd;
+  box-shadow: none;
+  transform: none;
+}
+
+.raid-time-card-disabled .raid-time-card-time,
+.raid-time-card-disabled .raid-time-card-count,
+.raid-time-card-disabled .raid-time-card-date {
+  color: #8b8b8b;
+}
+
+.raid-time-card-disabled .raid-time-card-members {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.raid-time-card-footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.raid-time-card-status,
+.raid-time-card-warning,
+.raid-time-card-info,
+.raid-time-card-stable {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.raid-time-card-status {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.raid-time-card-warning {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fdba74;
+}
+
+.raid-time-card-info {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}
+
+.raid-time-card-stable {
+  background: #ecfdf3;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.raid-time-card-arrow {
+  color: #667085;
+  font-size: 18px;
+  font-weight: 900;
+  transition: transform 0.18s ease, color 0.18s ease;
+}
+
+.raid-time-card:hover .raid-time-card-arrow {
+  transform: translateX(4px);
+  color: #4338ca;
+}
+
+/* ============================= */
+/* Responsive - Home */
+/* ============================= */
+@media (max-width: 1100px) {
+  .raid-time-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .raid-home-hero {
+    flex-direction: column;
+  }
+
+  .raid-home-hero-right {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .raid-page {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .raid-home-title {
+    font-size: 28px;
+  }
+
+  .raid-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .raid-time-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .raid-time-card {
+    min-height: 176px;
+  }
+
+  .raid-time-card-time {
+    font-size: 34px;
+  }
+
+  .raid-time-card-count {
+    font-size: 22px;
+  }
+}
+
+.raid-time-card-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.raid-time-card-applied {
+  border: 2px solid #5865f2;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  box-shadow: 0 14px 28px rgba(88, 101, 242, 0.16);
+}
+
+.raid-time-card-applied .raid-time-card-date,
+.raid-time-card-applied .raid-time-card-time,
+.raid-time-card-applied .raid-time-card-count {
+  color: #2f3aa8;
+}
+
+.raid-time-card-disabled {
+  background: linear-gradient(180deg, #eeeeee 0%, #e3e3e3 100%);
+  border-color: #cfcfcf;
+  color: #8b8b8b;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.raid-time-card-disabled:hover {
+  border-color: #cfcfcf;
+  box-shadow: none;
+  transform: none;
+}
+
+.raid-time-card-disabled .raid-time-card-date,
+.raid-time-card-disabled .raid-time-card-time,
+.raid-time-card-disabled .raid-time-card-count {
+  color: #8b8b8b;
+}
+
+.raid-time-card-status {
+  margin-top: 6px;
+  color: #7a7a7a;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.raid-time-card-warning {
+  margin-top: 6px;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.raid-time-card-info {
+  margin-top: 4px;
+  color: #475467;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ============================= */
+/* Raids Page */
+/* ============================= */
+.raids-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.raids-page-header {
+  margin-bottom: 20px;
+}
+
+.raids-page-title {
+  margin: 0;
+  color: #111827;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.raids-page-subtitle {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.raids-page-loading {
+  padding: 40px 0;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.raids-list {
+  display: grid;
+  gap: 14px;
+}
+
+.raids-list-card {
+  width: 100%;
+  text-align: left;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 18px;
+  padding: 18px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.raids-list-card:hover {
+  border-color: rgba(88, 101, 242, 0.28);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.1);
+  transform: translateY(-2px);
+}
+
+.raids-list-card.is-applied {
+  border: 2px solid #5865f2;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+}
+
+.raids-list-card.is-disabled {
+  cursor: not-allowed;
+  background: linear-gradient(180deg, #eeeeee 0%, #e3e3e3 100%);
+  border-color: #cfcfcf;
+  box-shadow: none;
+}
+
+.raids-list-card.is-disabled:hover {
+  transform: none;
+  border-color: #cfcfcf;
+  box-shadow: none;
+}
+
+.raids-list-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.raids-list-card-title {
+  color: #111827;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.raids-list-card-meta {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.raids-list-card-count {
+  color: #111827;
+  font-size: 18px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.raids-list-card-description {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.raids-list-card-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.raids-list-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.raids-list-badge.is-primary {
+  background: #e0e7ff;
+  color: #2f3aa8;
+}
+
+.raids-list-badge.is-gray {
+  background: #e5e7eb;
+  color: #4b5563;
+}
+
+.raids-list-badge.is-red {
+  background: #fee4e2;
+  color: #b42318;
+}
+
+.raids-list-badge.is-yellow {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ============================= */
+/* Modal Overlay */
+/* ============================= */
+.raid-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 24px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.5);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.raid-modal-overlay::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================= */
+/* Modal Box */
+/* ============================= */
+.raid-modal {
+  width: 100%;
+  max-width: 820px;
+  margin: 40px 0;
+  padding: 24px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.22);
+  max-height: none;
+  overflow: visible;
+}
+
+/* ============================= */
+/* Modal Header */
+/* ============================= */
+.raid-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.raid-modal-header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.raid-modal-title {
+  margin: 0;
+  color: #111827;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.raid-modal-meta {
+  margin: 6px 0 0;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.raid-modal-close-button {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 9px 14px;
+  cursor: pointer;
+  color: #111827;
+  font-weight: 700;
+}
+
+.raid-modal-close-button:hover {
+  background: #f8fafc;
+}
+
+/* ============================= */
+/* Party Grid */
+/* ============================= */
+.raid-party-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* ============================= */
+/* Party Box */
+/* ============================= */
+.raid-party-box {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.raid-party-title {
+  margin-bottom: 8px;
+  color: #111827;
+  font-weight: 800;
+}
+
+.raid-party-average {
+  margin-bottom: 8px;
+  color: #374151;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.raid-party-warning {
+  margin-bottom: 8px;
+  color: #b42318;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ============================= */
+/* Slot List */
+/* ============================= */
+.raid-slot-list {
+  display: grid;
+  gap: 8px;
+}
+
+.raid-slot {
+  min-height: 76px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 14px;
+}
+
+.raid-slot.empty {
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+
+.raid-slot-name {
+  margin-bottom: 4px;
+  color: #111827;
+  font-weight: 800;
+}
+
+.raid-slot-job,
+.raid-slot-power,
+.raid-slot-empty-text {
+  color: #4b5563;
+  font-size: 13px;
+}
+
+.raid-slot-my-character {
+  border: 2px solid #5865f2;
+  background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 100%);
+  box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.18);
+  transform: scale(1.01);
+}
+
+.raid-slot-badge {
+  display: inline-block;
+  align-self: flex-start;
+  margin-bottom: 8px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+/* ============================= */
+/* Apply Section */
+/* ============================= */
+.raid-apply-section {
+  margin-top: 24px;
+}
+
+.raid-apply-title {
+  margin-bottom: 12px;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.raid-no-characters {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.raid-my-application-box {
+  margin-top: 4px;
+}
+
+.raid-my-application-text {
+  margin-bottom: 12px;
+}
+
+.raid-my-character-summary {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border: 1px solid rgba(88, 101, 242, 0.22);
+  border-radius: 14px;
+  background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+  color: #3730a3;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* ============================= */
+/* Character Buttons */
+/* ============================= */
+.raid-character-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.raid-character-button {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #111827;
+  font-weight: 700;
+}
+
+.raid-character-button:hover {
+  border-color: rgba(88, 101, 242, 0.28);
+  background: #f8faff;
+}
+
+.raid-cancel-button {
+  border-color: #f1b5b5;
+  color: #b42318;
+}
+
+.raid-cancel-button:hover {
+  border-color: #de8e8e;
+  background: #fff5f5;
+}
+
+/* ============================= */
+/* Admin Page */
+/* ============================= */
+.admin-page {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.admin-page-header {
+  margin-bottom: 20px;
+}
+
+.admin-page-title {
+  margin: 0;
+  color: #111827;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.admin-page-subtitle {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-page-loading {
+  padding: 40px 0;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.admin-form-card {
+  padding: 24px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-form-label {
+  color: #111827;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin-form-input,
+.admin-form-textarea {
+  width: 100%;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #ffffff;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-form-input:focus,
+.admin-form-textarea:focus {
+  border-color: rgba(88, 101, 242, 0.55);
+  box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.12);
+}
+
+.admin-form-textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.admin-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.admin-primary-button,
+.admin-secondary-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.admin-primary-button:hover,
+.admin-secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+.admin-primary-button {
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(88, 101, 242, 0.22);
+}
+
+.admin-secondary-button {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+@keyframes appLogoPulse {
+  0% {
+    transform: translateY(0) scale(1);
+    filter:
+      drop-shadow(0 0 4px rgba(125, 211, 252, 0.22))
+      drop-shadow(0 0 10px rgba(99, 102, 241, 0.20))
+      drop-shadow(0 4px 14px rgba(2, 6, 23, 0.45));
+  }
+
+  50% {
+    transform: translateY(-1px) scale(1.04);
+    filter:
+      drop-shadow(0 0 8px rgba(125, 211, 252, 0.42))
+      drop-shadow(0 0 18px rgba(99, 102, 241, 0.34))
+      drop-shadow(0 6px 22px rgba(2, 6, 23, 0.62));
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    filter:
+      drop-shadow(0 0 4px rgba(125, 211, 252, 0.22))
+      drop-shadow(0 0 10px rgba(99, 102, 241, 0.20))
+      drop-shadow(0 4px 14px rgba(2, 6, 23, 0.45));
+  }
+}
+
+/* ============================= */
+/* Responsive */
+/* ============================= */
+@media (max-width: 768px) {
+  .app-header-inner {
+    padding: 14px 16px;
+  }
+
+  .app-main {
+    padding: 16px;
+  }
+
+  .app-floating-sidebar {
+    top: 76px;
+    left: 12px;
+    width: calc(100vw - 24px);
+    max-width: 320px;
+  }
+
+  .app-floating-sidebar-toggle {
+    top: 76px;
+    left: 12px;
+  }
+
+  .raid-time-grid {
+    grid-template-columns: repeat(2, 188px);
+    gap: 16px;
+  }
+
+  .raid-time-card-time {
+    font-size: 28px;
+  }
+
+  .raid-time-card-count {
+    font-size: 18px;
+  }
+
+  .raids-page-title {
+    font-size: 28px;
+  }
+
+  .raids-list-card-top {
+    flex-direction: column;
+  }
+
+  .raids-list-card-count {
+    font-size: 16px;
+  }
+
+  .raid-party-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .raid-modal {
+    max-width: calc(100% - 16px);
+    margin: 24px 0;
+    padding: 18px;
+  }
+
+  .raid-section-label {
+    font-size: 24px;
+  }
+
+  .raid-modal-overlay {
+    padding: 16px 12px;
+  }
+
+  .admin-page-title {
+    font-size: 28px;
+  }
+
+  .admin-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form-card {
+    padding: 18px;
+  }
+
+  .admin-form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .admin-primary-button,
+  .admin-secondary-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    padding: 16px;
+  }
+
+  .raid-page {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .raid-time-grid {
+    grid-template-columns: 188px;
+  }
+
+  .raid-section-label {
+    font-size: 22px;
+  }
+}

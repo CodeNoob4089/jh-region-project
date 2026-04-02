@@ -1,0 +1,407 @@
+.raid-history-detail-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.raid-history-detail-loading,
+.raid-history-detail-empty {
+  padding: 24px 0;
+  color: #4b5563;
+  font-weight: 700;
+}
+
+.raid-history-detail-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 24px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(88, 101, 242, 0.16), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.1), transparent 24%),
+    linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.raid-history-detail-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.raid-history-detail-kicker {
+  color: #5865f2;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.raid-history-detail-title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 900;
+  color: #111827;
+  letter-spacing: -0.03em;
+}
+
+.raid-history-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.raid-history-detail-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #eef2f7;
+  color: #475467;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.raid-history-detail-meta-chip.is-completed {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.raid-history-detail-back-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.raid-history-detail-back-button:hover {
+  transform: translateY(-1px);
+}
+
+.raid-history-detail-description-card {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.raid-history-detail-description-label {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.raid-history-detail-description {
+  color: #334155;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.raid-history-detail-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.raid-history-detail-section {
+  padding: 18px;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.raid-history-detail-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.raid-history-detail-section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 900;
+  color: #111827;
+}
+
+.raid-history-detail-section-count {
+  color: #667085;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.raid-history-detail-list {
+  display: grid;
+  gap: 10px;
+}
+
+.raid-history-detail-item {
+  padding: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  background: #ffffff;
+}
+
+.raid-history-detail-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.raid-history-detail-name {
+  font-weight: 900;
+  color: #111827;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.raid-history-detail-sub {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.raid-history-detail-power {
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.raid-history-detail-party-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.raid-history-detail-party {
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  padding: 14px;
+  background:
+    radial-gradient(circle at top right, rgba(88, 101, 242, 0.08), transparent 28%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.raid-history-detail-party-top {
+  margin-bottom: 10px;
+}
+
+.raid-history-detail-party-title {
+  font-weight: 900;
+  color: #111827;
+  font-size: 18px;
+}
+
+.raid-history-detail-party-sub {
+  font-size: 13px;
+  color: #666;
+  margin-top: 6px;
+  font-weight: 700;
+}
+
+.raid-history-detail-party-warning {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fdba74;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.raid-history-detail-slot-list {
+  display: grid;
+  gap: 8px;
+}
+
+.raid-history-detail-slot {
+  padding: 12px;
+  border-radius: 14px;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.raid-history-detail-slot-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.raid-history-detail-slot-name {
+  font-weight: 800;
+  color: #111827;
+}
+
+.raid-history-detail-slot-sub {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.raid-history-detail-slot-power {
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.raid-history-detail-slot-empty {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.raid-history-detail-job-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  width: fit-content;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+/* 직업 태그 */
+.job-warrior {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.job-guardian {
+  background: #fff7ed;
+  color: #d97706;
+  border-color: #fed7aa;
+}
+
+.job-assassin {
+  background: #faf5ff;
+  color: #9333ea;
+  border-color: #e9d5ff;
+}
+
+.job-archer {
+  background: #f0fdf4;
+  color: #16a34a;
+  border-color: #bbf7d0;
+}
+
+.job-mage {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+}
+
+.job-spirit {
+  background: #f0fdfa;
+  color: #0f766e;
+  border-color: #99f6e4;
+}
+
+.job-support {
+  background: #fff7ed;
+  color: #ea580c;
+  border-color: #fdba74;
+}
+
+.job-healer {
+  background: #f0f9ff;
+  color: #0284c7;
+  border-color: #bae6fd;
+}
+
+/* 전투력 구간 */
+.tier-1 {
+  color: #6b7280;
+}
+
+.tier-2 {
+  color: #16a34a;
+}
+
+.tier-3 {
+  color: #0891b2;
+}
+
+.tier-4 {
+  color: #2563eb;
+}
+
+.tier-5 {
+  color: #7c3aed;
+}
+
+.tier-6 {
+  color: #db2777;
+}
+
+.tier-7 {
+  color: #ea580c;
+}
+
+.tier-8 {
+  color: #ca8a04;
+}
+
+@media (max-width: 900px) {
+  .raid-history-detail-grid,
+  .raid-history-detail-party-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .raid-history-detail-page {
+    padding-top: 28px;
+    padding-bottom: 32px;
+  }
+
+  .raid-history-detail-hero {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .raid-history-detail-title {
+    font-size: 24px;
+  }
+
+  .raid-history-detail-back-button {
+    width: 100%;
+  }
+
+  .raid-history-detail-item-top,
+  .raid-history-detail-slot-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

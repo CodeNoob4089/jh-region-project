@@ -1,0 +1,209 @@
+.admin-raids-page {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+.admin-raids-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-raids-title {
+  margin: 0;
+  color: #111827;
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.admin-raids-subtitle {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.admin-raids-create-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 11px 16px;
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(88, 101, 242, 0.22);
+  transition: transform 0.15s ease;
+}
+
+.admin-raids-create-button:hover {
+  transform: translateY(-1px);
+}
+
+.admin-raids-loading,
+.admin-raids-empty {
+  padding: 32px 0;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.admin-raids-list {
+  display: grid;
+  gap: 14px;
+}
+
+.admin-raids-card {
+  padding: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.admin-raids-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.admin-raids-card-title {
+  color: #111827;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.admin-raids-card-meta {
+  margin-top: 6px;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin-raids-card-count {
+  color: #111827;
+  font-size: 18px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.admin-raids-card-description {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f1f5f9;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.admin-raids-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.admin-raids-edit-button,
+.admin-raids-delete-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.admin-raids-edit-button:hover,
+.admin-raids-delete-button:hover {
+  transform: translateY(-1px);
+}
+
+.admin-raids-edit-button {
+  background: #111827;
+  color: #ffffff;
+}
+
+.admin-raids-delete-button {
+  background: #fff5f5;
+  color: #b42318;
+}
+
+.admin-raids-delete-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .admin-raids-page {
+    padding-top: 28px;
+    padding-bottom: 32px;
+  }
+
+  .admin-raids-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .admin-raids-title {
+    font-size: 28px;
+  }
+
+  .admin-raids-card-top {
+    flex-direction: column;
+  }
+
+  .admin-raids-card-count {
+    font-size: 16px;
+  }
+
+  .admin-raids-card-actions {
+    flex-direction: column;
+  }
+
+  .admin-raids-edit-button,
+  .admin-raids-delete-button,
+  .admin-raids-create-button {
+    width: 100%;
+  }
+}
+.admin-raids-detail-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  background: #eef2ff;
+  color: #2f3aa8;
+}
+
+.admin-raids-detail-button:hover {
+  transform: translateY(-1px);
+}
+.admin-raids-detail-button {
+  border: 0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  background: #eef2ff;
+  color: #2f3aa8;
+}
+
+.admin-raids-detail-button:hover {
+  transform: translateY(-1px);
+}
