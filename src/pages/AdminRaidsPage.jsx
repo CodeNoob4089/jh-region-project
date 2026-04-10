@@ -162,14 +162,14 @@ function AdminRaidsPage() {
           <button
             type="button"
             className="admin-raids-create-button"
-            onClick={() => navigate("/admin/raids/new")}
+            onClick={() => navigate("/raids/new")}
           >
             공격대 생성
           </button>
         </div>
 
         {loading ? (
-          <div className="admin-raids-loading">공격대 목록 불러오는 중.</div>
+          <div className="admin-raids-loading">공격대 목록 불러오는 중...</div>
         ) : raids.length === 0 ? (
           <div className="admin-raids-empty">생성된 공격대가 없습니다.</div>
         ) : (
@@ -183,7 +183,8 @@ function AdminRaidsPage() {
                     <div>
                       <div className="admin-raids-card-title">{raid.title}</div>
                       <div className="admin-raids-card-meta">
-                        {formatDateWithDay(raid.raid_date)} · {formatTime(raid.start_time)}
+                        {formatDateWithDay(raid.raid_date)} ·{" "}
+                        {formatTime(raid.start_time)}
                       </div>
                     </div>
 
@@ -203,7 +204,7 @@ function AdminRaidsPage() {
                       <button
                         type="button"
                         className="admin-raids-edit-button"
-                        onClick={() => navigate(`/admin/raids/${raid.id}/edit`)}
+                        onClick={() => navigate(`/raids/${raid.id}/edit`)}
                       >
                         수정
                       </button>
@@ -212,7 +213,7 @@ function AdminRaidsPage() {
                     <button
                       type="button"
                       className="admin-raids-detail-button"
-                      onClick={() => navigate(`/admin/raids/${raid.id}`)}
+                      onClick={() => navigate(`/raids/${raid.id}`)}
                     >
                       상세
                     </button>
