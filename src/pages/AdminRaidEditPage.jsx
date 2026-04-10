@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Layout from "../layout/Layout";
 import { supabase } from "../lib/supabase";
 import { useAuthContext } from "../context/AuthContext";
-import "../styles/admin-raid-edit.css";
+import "../styles/raid-form.css";
 
 function AdminRaidEditPage() {
   const navigate = useNavigate();
@@ -17,9 +17,25 @@ function AdminRaidEditPage() {
 
   const [title, setTitle] = useState("");
   const [raidDate, setRaidDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [maxMembers, setMaxMembers] = useState(8);
+  const [selectedHour, setSelectedHour] = useState("00");
+  const [selectedMinute, setSelectedMinute] = useState("00");
   const [description, setDescription] = useState("");
+
+  const maxMembers = 8;
+
+  const hourOptions = useMemo(() => {
+    return Array.from({ length: 24 }, (_, index) =>
+      String(index).padStart(2, "0")
+    );
+  }, []);
+
+  const minuteOptions = useMemo(() => {
+    return Array.from({ length: 60 }, (_, index) =>
+      String(index).padStart(2, "0")
+    );
+  }, []);
+
+  const startTime = `${selectedHour}:${selectedMinute}`;
 
   useEffect(() => {
     if (authLoading) return;
@@ -38,27 +54,32 @@ function AdminRaidEditPage() {
 
       const { data, error } = await supabase
         .from("raids")
-        .select("id, title, raid_date, start_time, max_members, description, created_by")
+        .select(
+          "id, title, raid_date, start_time, max_members, description, created_by"
+        )
         .eq("id", raidId)
         .single();
 
       if (error) {
         console.error("공격대 정보 불러오기 실패:", error.message);
         toast.error("공격대 정보를 불러오지 못했습니다.");
-        navigate("/admin/raids");
+        navigate("/raids/manage");
         return;
       }
 
       if (data.created_by !== user.id) {
         toast.error("본인이 만든 공격대만 수정할 수 있습니다.");
-        navigate("/admin/raids");
+        navigate("/raids/manage");
         return;
       }
 
       setTitle(data.title || "");
       setRaidDate(data.raid_date || "");
-      setStartTime(data.start_time ? data.start_time.slice(0, 5) : "");
-      setMaxMembers(data.max_members || 8);
+
+      const timeParts = (data.start_time || "00:00").split(":");
+      setSelectedHour(timeParts[0] || "00");
+      setSelectedMinute(timeParts[1] || "00");
+
       setDescription(data.description || "");
       setLoadingRaid(false);
     };
@@ -84,13 +105,8 @@ function AdminRaidEditPage() {
       return;
     }
 
-    if (!startTime) {
+    if (!selectedHour || !selectedMinute) {
       toast.error("시간을 선택해주세요.");
-      return;
-    }
-
-    if (!maxMembers || Number(maxMembers) <= 0) {
-      toast.error("최대 인원을 올바르게 입력해주세요.");
       return;
     }
 
@@ -103,7 +119,7 @@ function AdminRaidEditPage() {
           title: title.trim(),
           raid_date: raidDate,
           start_time: startTime,
-          max_members: Number(maxMembers),
+          max_members: maxMembers,
           description: description.trim(),
         })
         .eq("id", raidId)
@@ -116,7 +132,7 @@ function AdminRaidEditPage() {
       }
 
       toast.success("공격대가 수정되었습니다.");
-      navigate("/admin/raids");
+      navigate("/raids/manage");
     } finally {
       setSubmitting(false);
     }
@@ -125,8 +141,8 @@ function AdminRaidEditPage() {
   if (authLoading || loadingRaid) {
     return (
       <Layout>
-        <div className="admin-raid-edit-page">
-          <div className="admin-raid-edit-loading">공격대 정보 불러오는 중...</div>
+        <div className="raid-form-page">
+          <div className="raid-form-loading">공격대 정보 불러오는 중...</div>
         </div>
       </Layout>
     );
@@ -138,19 +154,19 @@ function AdminRaidEditPage() {
 
   return (
     <Layout>
-      <div className="admin-raid-edit-page">
-        <div className="admin-raid-edit-header">
-          <h1 className="admin-raid-edit-title">공격대 수정</h1>
-          <p className="admin-raid-edit-subtitle">
+      <div className="raid-form-page">
+        <div className="raid-form-header">
+          <h1 className="raid-form-title">공격대 수정</h1>
+          <p className="raid-form-subtitle">
             내가 만든 공격대 정보를 수정할 수 있습니다.
           </p>
         </div>
 
-        <form className="admin-raid-edit-card" onSubmit={handleSubmit}>
-          <div className="admin-raid-edit-group">
-            <label className="admin-raid-edit-label">공격대 제목</label>
+        <form className="raid-form-card" onSubmit={handleSubmit}>
+          <div className="raid-form-group">
+            <label className="raid-form-label">공격대 제목</label>
             <select
-              className="admin-raid-edit-input"
+              className="raid-form-input"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             >
@@ -160,44 +176,65 @@ function AdminRaidEditPage() {
             </select>
           </div>
 
-          <div className="admin-raid-edit-row">
-            <div className="admin-raid-edit-group">
-              <label className="admin-raid-edit-label">날짜</label>
+          <div className="raid-form-row raid-form-row-double">
+            <div className="raid-form-group">
+              <label className="raid-form-label">날짜</label>
               <input
                 type="date"
-                className="admin-raid-edit-input"
+                className="raid-form-input"
                 value={raidDate}
                 onChange={(e) => setRaidDate(e.target.value)}
               />
             </div>
 
-            <div className="admin-raid-edit-group">
-              <label className="admin-raid-edit-label">시작 시간</label>
-              <input
-                type="time"
-                className="admin-raid-edit-input"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-              />
+            <div className="raid-form-group raid-form-time-group">
+              <label className="raid-form-label">시작 시간</label>
+              <div className="raid-form-time-grid">
+                <select
+                  className="raid-form-input"
+                  value={selectedHour}
+                  onChange={(e) => setSelectedHour(e.target.value)}
+                >
+                  {hourOptions.map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}시
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  className="raid-form-input"
+                  value={selectedMinute}
+                  onChange={(e) => setSelectedMinute(e.target.value)}
+                >
+                  {minuteOptions.map((minute) => (
+                    <option key={minute} value={minute}>
+                      {minute}분
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
-          <div className="admin-raid-edit-group">
-            <label className="admin-raid-edit-label">최대 인원</label>
+          <div className="raid-form-group">
+            <label className="raid-form-label">최대 인원</label>
             <input
               type="number"
-              min="1"
-              max="24"
-              className="admin-raid-edit-input"
+              className="raid-form-input raid-form-input-disabled"
               value={maxMembers}
-              onChange={(e) => setMaxMembers(e.target.value)}
+              disabled
+              readOnly
             />
+            <div className="raid-form-help-text">
+              최대 인원은 8명으로 고정됩니다.
+            </div>
           </div>
 
-          <div className="admin-raid-edit-group">
-            <label className="admin-raid-edit-label">설명</label>
+          <div className="raid-form-group">
+            <label className="raid-form-label">설명</label>
             <textarea
-              className="admin-raid-edit-textarea"
+              className="raid-form-textarea"
               rows="5"
               placeholder="예: 힐러 1명 필수 / 디스코드 음성 참여 필수 / 늦참 불가"
               value={description}
@@ -205,18 +242,18 @@ function AdminRaidEditPage() {
             />
           </div>
 
-          <div className="admin-raid-edit-actions">
+          <div className="raid-form-actions">
             <button
               type="button"
-              className="admin-raid-edit-cancel"
-              onClick={() => navigate("/admin/raids")}
+              className="raid-form-button raid-form-button-secondary"
+              onClick={() => navigate("/raids/manage")}
             >
               취소
             </button>
 
             <button
               type="submit"
-              className="admin-raid-edit-submit"
+              className="raid-form-button raid-form-button-primary"
               disabled={submitting}
             >
               {submitting ? "저장 중..." : "수정 저장"}

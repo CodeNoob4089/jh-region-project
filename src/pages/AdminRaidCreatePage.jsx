@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Layout from "../layout/Layout";
 import { supabase } from "../lib/supabase";
 import { useAuthContext } from "../context/AuthContext";
+import "../styles/raid-form.css";
 
 function AdminRaidCreatePage() {
   const navigate = useNavigate();
@@ -14,9 +15,25 @@ function AdminRaidCreatePage() {
 
   const [title, setTitle] = useState("");
   const [raidDate, setRaidDate] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [maxMembers, setMaxMembers] = useState(8);
+  const [selectedHour, setSelectedHour] = useState("00");
+  const [selectedMinute, setSelectedMinute] = useState("00");
   const [description, setDescription] = useState("");
+
+  const maxMembers = 8;
+
+  const hourOptions = useMemo(() => {
+    return Array.from({ length: 24 }, (_, index) =>
+      String(index).padStart(2, "0")
+    );
+  }, []);
+
+  const minuteOptions = useMemo(() => {
+    return Array.from({ length: 60 }, (_, index) =>
+      String(index).padStart(2, "0")
+    );
+  }, []);
+
+  const startTime = `${selectedHour}:${selectedMinute}`;
 
   useEffect(() => {
     if (authLoading) return;
@@ -45,13 +62,8 @@ function AdminRaidCreatePage() {
       return;
     }
 
-    if (!startTime) {
+    if (!selectedHour || !selectedMinute) {
       toast.error("시간을 선택해주세요.");
-      return;
-    }
-
-    if (!maxMembers || Number(maxMembers) <= 0) {
-      toast.error("최대 인원을 올바르게 입력해주세요.");
       return;
     }
 
@@ -62,7 +74,7 @@ function AdminRaidCreatePage() {
         title: title.trim(),
         raid_date: raidDate,
         start_time: startTime,
-        max_members: Number(maxMembers),
+        max_members: maxMembers,
         description: description.trim(),
         created_by: user.id,
       });
@@ -83,8 +95,8 @@ function AdminRaidCreatePage() {
   if (authLoading) {
     return (
       <Layout>
-        <div className="admin-page">
-          <div className="admin-page-loading">불러오는 중...</div>
+        <div className="raid-form-page">
+          <div className="raid-form-loading">불러오는 중...</div>
         </div>
       </Layout>
     );
@@ -96,19 +108,19 @@ function AdminRaidCreatePage() {
 
   return (
     <Layout>
-      <div className="admin-page">
-        <div className="admin-page-header">
-          <h1 className="admin-page-title">공격대 생성</h1>
-          <p className="admin-page-subtitle">
+      <div className="raid-form-page">
+        <div className="raid-form-header">
+          <h1 className="raid-form-title">공격대 생성</h1>
+          <p className="raid-form-subtitle">
             새로운 공격대를 만들고 설명까지 함께 등록할 수 있습니다.
           </p>
         </div>
 
-        <form className="admin-form-card" onSubmit={handleSubmit}>
-          <div className="admin-form-group">
-            <label className="admin-form-label">공격대 제목</label>
+        <form className="raid-form-card" onSubmit={handleSubmit}>
+          <div className="raid-form-group">
+            <label className="raid-form-label">공격대 제목</label>
             <select
-              className="admin-form-input"
+              className="raid-form-input"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             >
@@ -118,44 +130,63 @@ function AdminRaidCreatePage() {
             </select>
           </div>
 
-          <div className="admin-form-row">
-            <div className="admin-form-group">
-              <label className="admin-form-label">날짜</label>
+          <div className="raid-form-row raid-form-row-double">
+            <div className="raid-form-group">
+              <label className="raid-form-label">날짜</label>
               <input
                 type="date"
-                className="admin-form-input"
+                className="raid-form-input"
                 value={raidDate}
                 onChange={(e) => setRaidDate(e.target.value)}
               />
             </div>
 
-            <div className="admin-form-group">
-              <label className="admin-form-label">시작 시간</label>
-              <input
-                type="time"
-                className="admin-form-input"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-              />
+<div className="raid-form-group raid-form-time-group">
+  <label className="raid-form-label">시작 시간</label>
+  <div className="raid-form-time-grid">
+                <select
+                  className="raid-form-input"
+                  value={selectedHour}
+                  onChange={(e) => setSelectedHour(e.target.value)}
+                >
+                  {hourOptions.map((hour) => (
+                    <option key={hour} value={hour}>
+                      {hour}시
+                    </option>
+                  ))}
+                </select>
+
+                <select
+                  className="raid-form-input"
+                  value={selectedMinute}
+                  onChange={(e) => setSelectedMinute(e.target.value)}
+                >
+                  {minuteOptions.map((minute) => (
+                    <option key={minute} value={minute}>
+                      {minute}분
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
-          <div className="admin-form-group">
-            <label className="admin-form-label">최대 인원</label>
+          <div className="raid-form-group">
+            <label className="raid-form-label">최대 인원</label>
             <input
               type="number"
-              min="1"
-              max="24"
-              className="admin-form-input"
+              className="raid-form-input raid-form-input-disabled"
               value={maxMembers}
-              onChange={(e) => setMaxMembers(e.target.value)}
+              disabled
+              readOnly
             />
+            <div className="raid-form-help-text">최대 인원은 8명으로 고정됩니다.</div>
           </div>
 
-          <div className="admin-form-group">
-            <label className="admin-form-label">설명</label>
+          <div className="raid-form-group">
+            <label className="raid-form-label">설명</label>
             <textarea
-              className="admin-form-textarea"
+              className="raid-form-textarea"
               rows="5"
               placeholder="예: 힐러 1명 필수 / 디스코드 음성 참여 필수 / 늦참 불가"
               value={description}
@@ -163,10 +194,10 @@ function AdminRaidCreatePage() {
             />
           </div>
 
-          <div className="admin-form-actions">
+          <div className="raid-form-actions">
             <button
               type="button"
-              className="admin-secondary-button"
+              className="raid-form-button raid-form-button-secondary"
               onClick={() => navigate("/raids")}
             >
               취소
@@ -174,7 +205,7 @@ function AdminRaidCreatePage() {
 
             <button
               type="submit"
-              className="admin-primary-button"
+              className="raid-form-button raid-form-button-primary"
               disabled={submitting}
             >
               {submitting ? "생성 중..." : "공격대 생성"}
