@@ -6,7 +6,7 @@ import Layout from "../layout/Layout";
 import { supabase } from "../lib/supabase";
 import { useAuthContext } from "../context/AuthContext";
 import { buildRaidParties } from "../utils/buildRaidParties";
-import "../styles/admin-raid-detail.css";
+import "../styles/raid-detail.css";
 
 function formatTime(timeString) {
   if (!timeString) return "";
@@ -62,7 +62,7 @@ function AdminRaidDetailPage() {
     if (raidError) {
       console.error("공격대 정보 불러오기 실패:", raidError.message);
       toast.error("공격대 정보를 불러오지 못했습니다.");
-      navigate("/admin/raids");
+      navigate("/raids/manage");
       return;
     }
 
@@ -186,7 +186,7 @@ function AdminRaidDetailPage() {
       }
 
       toast.success("공격대와 신청 정보가 삭제되었습니다.");
-      navigate("/admin/raids");
+      navigate("/raids/manage");
     } finally {
       setDeletingRaid(false);
     }
@@ -227,7 +227,7 @@ function AdminRaidDetailPage() {
       }
 
       toast.success("공격대가 완료 처리되었습니다.");
-      navigate("/admin/raids/history");
+      navigate("/raids/history");
     } finally {
       setCompletingRaid(false);
     }
@@ -242,19 +242,11 @@ function AdminRaidDetailPage() {
       warnings.push("지원 필요");
     }
 
-    const powerGap = Math.abs(
-      (parties[0]?.averagePower || 0) - (parties[1]?.averagePower || 0)
-    );
-
-    if (powerGap >= 3000) {
-      warnings.push("파티 균형 주의");
-    }
-
-    if (applications.length < raid?.max_members) {
+    if (applications.length < (raid?.max_members || 0)) {
       warnings.push("정원 미달");
     }
 
-    return { warnings, powerGap };
+    return { warnings };
   }, [parties, applications.length, raid?.max_members]);
 
   if (authLoading || loading) {
@@ -291,7 +283,7 @@ function AdminRaidDetailPage() {
             <button
               type="button"
               className="admin-raid-detail-back-button"
-              onClick={() => navigate("/admin/raids")}
+              onClick={() => navigate("/raids/manage")}
             >
               목록으로
             </button>
@@ -329,13 +321,6 @@ function AdminRaidDetailPage() {
             <div className="admin-raid-status-label">현재 인원</div>
             <div className="admin-raid-status-value">
               {applications.length}/{raid.max_members}
-            </div>
-          </div>
-
-          <div className="admin-raid-status-card">
-            <div className="admin-raid-status-label">파티 평균 전투력 차이</div>
-            <div className="admin-raid-status-value">
-              {partyWarnings.powerGap.toLocaleString()}
             </div>
           </div>
 
@@ -427,7 +412,7 @@ function AdminRaidDetailPage() {
               )}
 
               <div className="admin-raid-detail-slot-list">
-                {party.slots.map((member, slotIndex) => (
+                {parties[index].slots.map((member, slotIndex) => (
                   <div
                     key={slotIndex}
                     className={`admin-raid-detail-slot ${
