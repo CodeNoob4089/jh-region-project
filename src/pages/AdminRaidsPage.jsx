@@ -30,46 +30,17 @@ function AdminRaidsPage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuthContext();
 
-  const [checkingAdmin, setCheckingAdmin] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [raids, setRaids] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingRaidId, setDeletingRaidId] = useState(null);
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      if (authLoading) return;
+    if (authLoading) return;
 
-      if (!user) {
-        toast.error("로그인이 필요합니다.");
-        navigate("/");
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.error("관리자 권한 확인 실패:", error.message);
-        toast.error("권한 확인 중 오류가 발생했습니다.");
-        navigate("/");
-        return;
-      }
-
-      if (!data?.is_admin) {
-        toast.error("관리자만 접근할 수 있습니다.");
-        navigate("/");
-        return;
-      }
-
-      setIsAdmin(true);
-      setCheckingAdmin(false);
-    };
-
-    checkAdmin();
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      navigate("/");
+    }
   }, [user, authLoading, navigate]);
 
   const fetchRaids = async () => {
@@ -110,11 +81,21 @@ function AdminRaidsPage() {
   };
 
   useEffect(() => {
-    if (!isAdmin) return;
+    if (!user) return;
     fetchRaids();
-  }, [isAdmin]);
+  }, [user]);
 
   const handleDelete = async (raid) => {
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
+
+    if (raid.created_by !== user.id) {
+      toast.error("본인이 만든 공격대만 삭제할 수 있습니다.");
+      return;
+    }
+
     const confirmed = window.confirm(
       `정말 "${raid.title}" 공격대를 삭제하시겠습니까?\n\n` +
         "이 작업을 수행하면 해당 공격대의 신청 정보도 함께 삭제됩니다."
@@ -141,7 +122,8 @@ function AdminRaidsPage() {
       const { error: raidDeleteError } = await supabase
         .from("raids")
         .delete()
-        .eq("id", raid.id);
+        .eq("id", raid.id)
+        .eq("created_by", user.id);
 
       if (raidDeleteError) {
         console.error("공격대 삭제 실패:", raidDeleteError.message);
@@ -156,18 +138,14 @@ function AdminRaidsPage() {
     }
   };
 
-  if (authLoading || checkingAdmin) {
+  if (authLoading || !user) {
     return (
       <Layout>
         <div className="admin-raids-page">
-          <div className="admin-raids-loading">관리자 권한 확인 중.</div>
+          <div className="admin-raids-loading">불러오는 중...</div>
         </div>
       </Layout>
     );
-  }
-
-  if (!isAdmin) {
-    return null;
   }
 
   return (
@@ -177,7 +155,7 @@ function AdminRaidsPage() {
           <div>
             <h1 className="admin-raids-title">공격대 관리</h1>
             <p className="admin-raids-subtitle">
-              생성된 공격대를 수정하거나 삭제할 수 있습니다.
+              생성된 공격대를 확인하고, 내가 만든 공격대는 수정하거나 삭제할 수 있습니다.
             </p>
           </div>
 
@@ -196,55 +174,63 @@ function AdminRaidsPage() {
           <div className="admin-raids-empty">생성된 공격대가 없습니다.</div>
         ) : (
           <div className="admin-raids-list">
-            {raids.map((raid) => (
-              <div key={raid.id} className="admin-raids-card">
-                <div className="admin-raids-card-top">
-                  <div>
-                    <div className="admin-raids-card-title">{raid.title}</div>
-                    <div className="admin-raids-card-meta">
-                      {formatDateWithDay(raid.raid_date)} · {formatTime(raid.start_time)}
+            {raids.map((raid) => {
+              const isOwner = raid.created_by === user?.id;
+
+              return (
+                <div key={raid.id} className="admin-raids-card">
+                  <div className="admin-raids-card-top">
+                    <div>
+                      <div className="admin-raids-card-title">{raid.title}</div>
+                      <div className="admin-raids-card-meta">
+                        {formatDateWithDay(raid.raid_date)} · {formatTime(raid.start_time)}
+                      </div>
+                    </div>
+
+                    <div className="admin-raids-card-count">
+                      {raid.current_members}/{raid.max_members}
                     </div>
                   </div>
 
-                  <div className="admin-raids-card-count">
-                    {raid.current_members}/{raid.max_members}
+                  {String(raid.description || "").trim() !== "" && (
+                    <div className="admin-raids-card-description">
+                      {raid.description}
+                    </div>
+                  )}
+
+                  <div className="admin-raids-card-actions">
+                    {isOwner && (
+                      <button
+                        type="button"
+                        className="admin-raids-edit-button"
+                        onClick={() => navigate(`/admin/raids/${raid.id}/edit`)}
+                      >
+                        수정
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      className="admin-raids-detail-button"
+                      onClick={() => navigate(`/admin/raids/${raid.id}`)}
+                    >
+                      상세
+                    </button>
+
+                    {isOwner && (
+                      <button
+                        type="button"
+                        className="admin-raids-delete-button"
+                        onClick={() => handleDelete(raid)}
+                        disabled={deletingRaidId === raid.id}
+                      >
+                        {deletingRaidId === raid.id ? "삭제 중..." : "삭제"}
+                      </button>
+                    )}
                   </div>
                 </div>
-
-                {String(raid.description || "").trim() !== "" && (
-                  <div className="admin-raids-card-description">
-                    {raid.description}
-                  </div>
-                )}
-
-                <div className="admin-raids-card-actions">
-                  <button
-                    type="button"
-                    className="admin-raids-edit-button"
-                    onClick={() => navigate(`/admin/raids/${raid.id}/edit`)}
-                  >
-                    수정
-                  </button>
-
-                  <button
-                    type="button"
-                    className="admin-raids-detail-button"
-                    onClick={() => navigate(`/admin/raids/${raid.id}`)}
-                  >
-                    상세
-                  </button>
-
-                  <button
-                    type="button"
-                    className="admin-raids-delete-button"
-                    onClick={() => handleDelete(raid)}
-                    disabled={deletingRaidId === raid.id}
-                  >
-                    {deletingRaidId === raid.id ? "삭제 중..." : "삭제"}
-                  </button>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </div>

@@ -31,8 +31,6 @@ function AdminRaidDetailPage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuthContext();
 
-  const [checkingAdmin, setCheckingAdmin] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [raid, setRaid] = useState(null);
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,43 +38,9 @@ function AdminRaidDetailPage() {
   const [deletingRaid, setDeletingRaid] = useState(false);
   const [completingRaid, setCompletingRaid] = useState(false);
 
-  useEffect(() => {
-    const checkAdmin = async () => {
-      if (authLoading) return;
-
-      if (!user) {
-        toast.error("로그인이 필요합니다.");
-        navigate("/");
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.error("관리자 권한 확인 실패:", error.message);
-        toast.error("권한 확인 중 오류가 발생했습니다.");
-        navigate("/");
-        return;
-      }
-
-      if (!data?.is_admin) {
-        toast.error("관리자만 접근할 수 있습니다.");
-        navigate("/");
-        return;
-      }
-
-      setIsAdmin(true);
-      setCheckingAdmin(false);
-    };
-
-    checkAdmin();
-  }, [user, authLoading, navigate]);
-
   const fetchData = async () => {
+    if (!user) return;
+
     setLoading(true);
 
     const { data: raidData, error: raidError } = await supabase
@@ -89,7 +53,8 @@ function AdminRaidDetailPage() {
         max_members,
         description,
         is_completed,
-        completed_at
+        completed_at,
+        created_by
       `)
       .eq("id", raidId)
       .single();
@@ -130,11 +95,30 @@ function AdminRaidDetailPage() {
   };
 
   useEffect(() => {
-    if (!isAdmin) return;
+    if (authLoading) return;
+
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      navigate("/");
+      return;
+    }
+
     fetchData();
-  }, [isAdmin, raidId]);
+  }, [user, authLoading, raidId, navigate]);
+
+  const isOwner = raid?.created_by === user?.id;
 
   const handleCancel = async (applicationId) => {
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
+
+    if (!isOwner) {
+      toast.error("본인이 만든 공격대에서만 신청 취소를 관리할 수 있습니다.");
+      return;
+    }
+
     const ok = window.confirm("이 신청을 취소하시겠습니까?");
     if (!ok) return;
 
@@ -160,6 +144,16 @@ function AdminRaidDetailPage() {
   };
 
   const handleDeleteRaid = async () => {
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
+
+    if (!isOwner) {
+      toast.error("본인이 만든 공격대만 삭제할 수 있습니다.");
+      return;
+    }
+
     const ok = window.confirm(
       `정말 "${raid.title}" 공격대를 삭제하시겠습니까?\n\n이 작업을 수행하면 현재 신청 정보도 함께 삭제됩니다.`
     );
@@ -182,7 +176,8 @@ function AdminRaidDetailPage() {
       const { error: raidDeleteError } = await supabase
         .from("raids")
         .delete()
-        .eq("id", raid.id);
+        .eq("id", raid.id)
+        .eq("created_by", user.id);
 
       if (raidDeleteError) {
         console.error("공격대 삭제 실패:", raidDeleteError.message);
@@ -198,6 +193,16 @@ function AdminRaidDetailPage() {
   };
 
   const handleCompleteRaid = async () => {
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
+
+    if (!isOwner) {
+      toast.error("본인이 만든 공격대만 완료 처리할 수 있습니다.");
+      return;
+    }
+
     const ok = window.confirm(
       `정말 "${raid.title}" 공격대를 완료 처리하시겠습니까?\n\n완료된 공격대는 '지난 공격대 정보' 탭으로 이동됩니다.`
     );
@@ -212,7 +217,8 @@ function AdminRaidDetailPage() {
           is_completed: true,
           completed_at: new Date().toISOString(),
         })
-        .eq("id", raid.id);
+        .eq("id", raid.id)
+        .eq("created_by", user.id);
 
       if (error) {
         console.error("공격대 완료 처리 실패:", error.message);
@@ -251,7 +257,7 @@ function AdminRaidDetailPage() {
     return { warnings, powerGap };
   }, [parties, applications.length, raid?.max_members]);
 
-  if (authLoading || checkingAdmin || loading) {
+  if (authLoading || loading) {
     return (
       <Layout>
         <div className="admin-raid-detail-page">
@@ -261,7 +267,7 @@ function AdminRaidDetailPage() {
     );
   }
 
-  if (!isAdmin || !raid) {
+  if (!user || !raid) {
     return null;
   }
 
@@ -290,23 +296,27 @@ function AdminRaidDetailPage() {
               목록으로
             </button>
 
-            <button
-              type="button"
-              className="admin-raid-detail-complete-button"
-              onClick={handleCompleteRaid}
-              disabled={completingRaid}
-            >
-              {completingRaid ? "완료 처리 중..." : "공격대 완료"}
-            </button>
+            {isOwner && (
+              <>
+                <button
+                  type="button"
+                  className="admin-raid-detail-complete-button"
+                  onClick={handleCompleteRaid}
+                  disabled={completingRaid}
+                >
+                  {completingRaid ? "완료 처리 중..." : "공격대 완료"}
+                </button>
 
-            <button
-              type="button"
-              className="admin-raid-detail-delete-button"
-              onClick={handleDeleteRaid}
-              disabled={deletingRaid}
-            >
-              {deletingRaid ? "삭제 중..." : "공격대 삭제"}
-            </button>
+                <button
+                  type="button"
+                  className="admin-raid-detail-delete-button"
+                  onClick={handleDeleteRaid}
+                  disabled={deletingRaid}
+                >
+                  {deletingRaid ? "삭제 중..." : "공격대 삭제"}
+                </button>
+              </>
+            )}
           </div>
         </div>
 
@@ -372,14 +382,16 @@ function AdminRaidDetailPage() {
                   </div>
                 </div>
 
-                <button
-                  type="button"
-                  className="admin-raid-detail-cancel"
-                  onClick={() => handleCancel(app.id)}
-                  disabled={cancelingId === app.id}
-                >
-                  {cancelingId === app.id ? "취소 중..." : "신청 취소"}
-                </button>
+                {isOwner && (
+                  <button
+                    type="button"
+                    className="admin-raid-detail-cancel"
+                    onClick={() => handleCancel(app.id)}
+                    disabled={cancelingId === app.id}
+                  >
+                    {cancelingId === app.id ? "취소 중..." : "신청 취소"}
+                  </button>
+                )}
               </div>
             ))
           )}
@@ -446,16 +458,18 @@ function AdminRaidDetailPage() {
                           전투력 {Number(member.power || 0).toLocaleString()}
                         </div>
 
-                        <button
-                          type="button"
-                          className="admin-raid-detail-slot-cancel"
-                          onClick={() => handleCancel(member.applicationId)}
-                          disabled={cancelingId === member.applicationId}
-                        >
-                          {cancelingId === member.applicationId
-                            ? "취소 중..."
-                            : "신청 취소"}
-                        </button>
+                        {isOwner && (
+                          <button
+                            type="button"
+                            className="admin-raid-detail-slot-cancel"
+                            onClick={() => handleCancel(member.applicationId)}
+                            disabled={cancelingId === member.applicationId}
+                          >
+                            {cancelingId === member.applicationId
+                              ? "취소 중..."
+                              : "신청 취소"}
+                          </button>
+                        )}
                       </>
                     ) : (
                       <div className="admin-raid-detail-slot-empty">빈자리</div>

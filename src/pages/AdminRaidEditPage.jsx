@@ -12,8 +12,6 @@ function AdminRaidEditPage() {
   const { raidId } = useParams();
   const { user, loading: authLoading } = useAuthContext();
 
-  const [checkingAdmin, setCheckingAdmin] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [loadingRaid, setLoadingRaid] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
@@ -24,56 +22,35 @@ function AdminRaidEditPage() {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      if (authLoading) return;
+    if (authLoading) return;
 
-      if (!user) {
-        toast.error("로그인이 필요합니다.");
-        navigate("/");
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.error("관리자 권한 확인 실패:", error.message);
-        toast.error("권한 확인 중 오류가 발생했습니다.");
-        navigate("/");
-        return;
-      }
-
-      if (!data?.is_admin) {
-        toast.error("관리자만 접근할 수 있습니다.");
-        navigate("/");
-        return;
-      }
-
-      setIsAdmin(true);
-      setCheckingAdmin(false);
-    };
-
-    checkAdmin();
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      navigate("/");
+    }
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
     const fetchRaid = async () => {
-      if (!isAdmin) return;
+      if (!user) return;
 
       setLoadingRaid(true);
 
       const { data, error } = await supabase
         .from("raids")
-        .select("id, title, raid_date, start_time, max_members, description")
+        .select("id, title, raid_date, start_time, max_members, description, created_by")
         .eq("id", raidId)
         .single();
 
       if (error) {
         console.error("공격대 정보 불러오기 실패:", error.message);
         toast.error("공격대 정보를 불러오지 못했습니다.");
+        navigate("/admin/raids");
+        return;
+      }
+
+      if (data.created_by !== user.id) {
+        toast.error("본인이 만든 공격대만 수정할 수 있습니다.");
         navigate("/admin/raids");
         return;
       }
@@ -87,10 +64,15 @@ function AdminRaidEditPage() {
     };
 
     fetchRaid();
-  }, [isAdmin, raidId, navigate]);
+  }, [user, raidId, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
 
     if (!title.trim()) {
       toast.error("공격대 제목을 입력해주세요.");
@@ -124,7 +106,8 @@ function AdminRaidEditPage() {
           max_members: Number(maxMembers),
           description: description.trim(),
         })
-        .eq("id", raidId);
+        .eq("id", raidId)
+        .eq("created_by", user.id);
 
       if (error) {
         console.error("공격대 수정 실패:", error.message);
@@ -139,17 +122,17 @@ function AdminRaidEditPage() {
     }
   };
 
-  if (authLoading || checkingAdmin || loadingRaid) {
+  if (authLoading || loadingRaid) {
     return (
       <Layout>
         <div className="admin-raid-edit-page">
-          <div className="admin-raid-edit-loading">공격대 정보 불러오는 중.</div>
+          <div className="admin-raid-edit-loading">공격대 정보 불러오는 중...</div>
         </div>
       </Layout>
     );
   }
 
-  if (!isAdmin) {
+  if (!user) {
     return null;
   }
 
@@ -159,7 +142,7 @@ function AdminRaidEditPage() {
         <div className="admin-raid-edit-header">
           <h1 className="admin-raid-edit-title">공격대 수정</h1>
           <p className="admin-raid-edit-subtitle">
-            기존 공격대 정보를 수정할 수 있습니다.
+            내가 만든 공격대 정보를 수정할 수 있습니다.
           </p>
         </div>
 

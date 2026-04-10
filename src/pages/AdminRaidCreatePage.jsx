@@ -10,8 +10,6 @@ function AdminRaidCreatePage() {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuthContext();
 
-  const [checkingAdmin, setCheckingAdmin] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   const [title, setTitle] = useState("");
@@ -21,43 +19,21 @@ function AdminRaidCreatePage() {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      if (authLoading) return;
+    if (authLoading) return;
 
-      if (!user) {
-        toast.error("로그인이 필요합니다.");
-        navigate("/");
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("is_admin")
-        .eq("id", user.id)
-        .single();
-
-      if (error) {
-        console.error("관리자 권한 확인 실패:", error.message);
-        toast.error("권한 확인 중 오류가 발생했습니다.");
-        navigate("/");
-        return;
-      }
-
-      if (!data?.is_admin) {
-        toast.error("관리자만 접근할 수 있습니다.");
-        navigate("/");
-        return;
-      }
-
-      setIsAdmin(true);
-      setCheckingAdmin(false);
-    };
-
-    checkAdmin();
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      navigate("/");
+    }
   }, [user, authLoading, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error("로그인이 필요합니다.");
+      return;
+    }
 
     if (!title.trim()) {
       toast.error("공격대 제목을 입력해주세요.");
@@ -82,14 +58,14 @@ function AdminRaidCreatePage() {
     try {
       setSubmitting(true);
 
-const { error } = await supabase.from("raids").insert({
-  title: title.trim(),
-  raid_date: raidDate,
-  start_time: startTime,
-  max_members: Number(maxMembers),
-  description: description.trim(),
-  created_by: user.id,
-});
+      const { error } = await supabase.from("raids").insert({
+        title: title.trim(),
+        raid_date: raidDate,
+        start_time: startTime,
+        max_members: Number(maxMembers),
+        description: description.trim(),
+        created_by: user.id,
+      });
 
       if (error) {
         console.error("공격대 생성 실패:", error.message);
@@ -104,17 +80,17 @@ const { error } = await supabase.from("raids").insert({
     }
   };
 
-  if (authLoading || checkingAdmin) {
+  if (authLoading) {
     return (
       <Layout>
         <div className="admin-page">
-          <div className="admin-page-loading">관리자 권한 확인 중.</div>
+          <div className="admin-page-loading">불러오는 중...</div>
         </div>
       </Layout>
     );
   }
 
-  if (!isAdmin) {
+  if (!user) {
     return null;
   }
 
