@@ -13,6 +13,7 @@ import {
   getPowerTierClass,
 } from "../../utils/myPageHelpers";
 import "../../styles/raid.css";
+import "../../styles/raid-modal-panel.css";
 
 function formatDateWithDay(dateString) {
   if (!dateString) return "";
@@ -24,6 +25,23 @@ function formatDateWithDay(dateString) {
   const dayName = days[date.getDay()];
 
   return `${month}/${day} (${dayName})`;
+}
+
+function formatTime(timeString) {
+  if (!timeString) return "";
+
+  const parts = timeString.split(":");
+  return `${parts[0]}:${parts[1]}`;
+}
+
+function getModalDescription(description) {
+  const trimmed = String(description || "").trim();
+
+  if (!trimmed) {
+    return "설명이 아직 등록되지 않았습니다.";
+  }
+
+  return trimmed;
 }
 
 function RaidModal({ raid, onClose, onApplied }) {
@@ -166,7 +184,7 @@ function RaidModal({ raid, onClose, onApplied }) {
             <div className="raid-modal-kicker">RAID BOARD</div>
             <h2 className="raid-modal-title">{raid.title}</h2>
             <p className="raid-modal-meta">
-              {formatDateWithDay(raid.raid_date)} / {raid.start_time}
+              {formatDateWithDay(raid.raid_date)} / {formatTime(raid.start_time)}
             </p>
             <p className="raid-modal-meta">
               인원: {applications.length} / {raid.max_members}
@@ -182,6 +200,13 @@ function RaidModal({ raid, onClose, onApplied }) {
           </button>
         </div>
 
+        <div className="raid-modal-description-box">
+          <div className="raid-modal-description-label">RAID INFO</div>
+          <div className="raid-modal-description">
+            {getModalDescription(raid.description)}
+          </div>
+        </div>
+
         {myApplication && myCharacter && (
           <div className="raid-modal-summary">
             <span className="raid-modal-summary-label">현재 신청 캐릭터</span>
@@ -190,7 +215,9 @@ function RaidModal({ raid, onClose, onApplied }) {
               <span className="raid-modal-summary-name">{myCharacter.name}</span>
 
               <span
-                className={`raid-modal-job-pill ${JOB_STYLE_MAP[myCharacter.job] || ""}`}
+                className={`raid-modal-job-pill ${
+                  JOB_STYLE_MAP[myCharacter.job] || ""
+                }`}
               >
                 {myCharacter.job}
               </span>

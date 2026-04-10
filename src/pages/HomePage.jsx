@@ -238,7 +238,7 @@ function HomePage() {
 
                               <div className="raid-time-card-description-box">
                                 <div className="raid-time-card-description-label">
-                                  BATTLE INFO
+                                  RAID INFO
                                 </div>
 
                                 <div className="raid-time-card-description">
