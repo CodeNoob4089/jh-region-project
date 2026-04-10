@@ -1,0 +1,243 @@
+/* ============================= */
+/* 슬라이더 전체 범위 제한 */
+/* ============================= */
+.raid-slider-wrap {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.raid-home-swiper {
+  width: 100%;
+  max-width: 1120px;
+  overflow: hidden;
+  padding-bottom: 8px;
+}
+
+.raid-home-swiper-slide {
+  height: auto;
+  display: flex;
+}
+
+.raid-home-swiper-slide .raid-time-card {
+  width: 100%;
+  min-height: 100%;
+}
+
+.raid-home-swiper .swiper-wrapper {
+  align-items: stretch;
+}
+
+.raid-home-swiper .swiper-slide {
+  height: auto;
+}
+
+/* ============================= */
+/* 시간 폰트 */
+/* ============================= */
+.raid-time-card-time {
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+/* ============================= */
+/* 설명 박스 */
+/* ============================= */
+.raid-time-card-description-box {
+  position: relative;
+  margin-top: 14px;
+  padding: 14px 15px 13px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(247, 250, 255, 0.98) 0%, rgba(238, 244, 255, 0.96) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.45),
+    0 8px 18px rgba(37, 99, 235, 0.06);
+  overflow: hidden;
+}
+
+.raid-time-card-description-box::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, #5865f2 0%, #8b5cf6 100%);
+}
+
+.raid-time-card-description-box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 84px;
+  height: 84px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, transparent 70%);
+}
+
+/* ============================= */
+/* 설명 라벨 */
+/* ============================= */
+.raid-time-card-description-label {
+  font-family: "Orbitron", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: #4f46e5;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.raid-time-card-description-label::before {
+  content: "◆";
+  font-size: 9px;
+  color: #7c3aed;
+}
+
+/* ============================= */
+/* 설명 텍스트 */
+/* ============================= */
+.raid-time-card-description {
+  font-family: "Pretendard", sans-serif;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  text-align: left;
+  word-break: keep-all;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: calc(1.6em * 2);
+}
+
+/* ============================= */
+/* 상태별 설명 박스 */
+/* ============================= */
+.raid-time-card-applied .raid-time-card-description-box {
+  background:
+    linear-gradient(180deg, rgba(239, 244, 255, 0.98) 0%, rgba(230, 236, 255, 0.96) 100%);
+  border-color: rgba(88, 101, 242, 0.22);
+}
+
+.raid-time-card-applied .raid-time-card-description-label {
+  color: #4338ca;
+}
+
+.raid-time-card-applied .raid-time-card-description {
+  color: #2f3a63;
+}
+
+.raid-time-card-disabled .raid-time-card-description-box {
+  background:
+    linear-gradient(180deg, rgba(248, 250, 252, 0.92) 0%, rgba(241, 245, 249, 0.9) 100%);
+  border-color: rgba(148, 163, 184, 0.18);
+  box-shadow: none;
+}
+
+.raid-time-card-disabled .raid-time-card-description-box::before {
+  background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 100%);
+}
+
+.raid-time-card-disabled .raid-time-card-description-box::after {
+  display: none;
+}
+
+.raid-time-card-disabled .raid-time-card-description-label,
+.raid-time-card-disabled .raid-time-card-description {
+  color: #8b8b8b;
+}
+
+/* ============================= */
+/* 카드 hover 추가 효과 */
+/* ============================= */
+.raid-time-card {
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease,
+    filter 0.18s ease;
+}
+
+.raid-time-card:hover {
+  filter: brightness(1.02);
+  box-shadow:
+    0 20px 36px rgba(15, 23, 42, 0.14),
+    0 0 0 1px rgba(88, 101, 242, 0.08),
+    0 0 26px rgba(88, 101, 242, 0.14);
+}
+
+.raid-time-card-disabled:hover {
+  filter: none;
+  box-shadow: none;
+}
+
+/* ============================= */
+/* 시간 상태 강조 */
+/* ============================= */
+.raid-time-card .raid-time-card-time {
+  color: #111827;
+}
+
+.raid-time-card-applied .raid-time-card-time {
+  color: #3f46c8;
+  text-shadow: 0 0 12px rgba(88, 101, 242, 0.18);
+}
+
+.raid-time-card-disabled .raid-time-card-time {
+  color: #8b8b8b;
+  text-shadow: none;
+}
+
+/* ============================= */
+/* 상태 뱃지 살짝 강화 */
+/* ============================= */
+.raid-time-card-warning,
+.raid-time-card-info,
+.raid-time-card-stable,
+.raid-time-card-status {
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+}
+
+/* ============================= */
+/* 모바일 */
+/* ============================= */
+@media (max-width: 1024px) {
+  .raid-slider-wrap {
+    overflow-x: auto;
+  }
+
+  .raid-home-swiper {
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  .raid-slider-wrap {
+    padding: 0 10px;
+  }
+
+  .raid-time-card-description-box {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .raid-time-card-description-label {
+    font-size: 10px;
+  }
+
+  .raid-time-card-description {
+    font-size: 13px;
+    line-height: 1.55;
+    min-height: calc(1.55em * 2);
+  }
+}
