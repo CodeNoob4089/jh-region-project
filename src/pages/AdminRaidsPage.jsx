@@ -33,6 +33,7 @@ function AdminRaidsPage() {
   const [raids, setRaids] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deletingRaidId, setDeletingRaidId] = useState(null);
+  const [togglingRaidId, setTogglingRaidId] = useState(null);
 
   useEffect(() => {
     if (authLoading) return;
@@ -84,6 +85,27 @@ function AdminRaidsPage() {
     if (!user) return;
     fetchRaids();
   }, [user]);
+
+  const handleToggleCompleted = async (raid) => {
+    try {
+      setTogglingRaidId(raid.id);
+      const { error } = await supabase
+        .from("raids")
+        .update({ is_completed: !raid.is_completed })
+        .eq("id", raid.id);
+
+      if (error) {
+        console.error("완료 상태 변경 실패:", error.message);
+        toast.error("완료 상태 변경에 실패했습니다.");
+        return;
+      }
+
+      toast.success(raid.is_completed ? "공격대가 활성화되었습니다." : "공격대가 완료 처리되었습니다.");
+      await fetchRaids();
+    } finally {
+      setTogglingRaidId(null);
+    }
+  };
 
   const handleDelete = async (raid) => {
     if (!user) {
@@ -178,10 +200,15 @@ function AdminRaidsPage() {
               const isOwner = raid.created_by === user?.id;
 
               return (
-                <div key={raid.id} className="admin-raids-card">
+                <div key={raid.id} className={`admin-raids-card${raid.is_completed ? " is-completed" : ""}`}>
                   <div className="admin-raids-card-top">
                     <div>
-                      <div className="admin-raids-card-title">{raid.title}</div>
+                      <div className="admin-raids-card-title">
+                        {raid.title}
+                        {raid.is_completed && (
+                          <span className="admin-raids-completed-badge">완료</span>
+                        )}
+                      </div>
                       <div className="admin-raids-card-meta">
                         {formatDateWithDay(raid.raid_date)} ·{" "}
                         {formatTime(raid.start_time)}
@@ -217,6 +244,21 @@ function AdminRaidsPage() {
                     >
                       상세
                     </button>
+
+                    {isOwner && (
+                      <button
+                        type="button"
+                        className={`admin-raids-complete-button${raid.is_completed ? " is-completed" : ""}`}
+                        onClick={() => handleToggleCompleted(raid)}
+                        disabled={togglingRaidId === raid.id}
+                      >
+                        {togglingRaidId === raid.id
+                          ? "변경 중..."
+                          : raid.is_completed
+                          ? "활성화"
+                          : "완료 처리"}
+                      </button>
+                    )}
 
                     {isOwner && (
                       <button

@@ -192,7 +192,9 @@
 .admin-raids-detail-button:hover {
   transform: translateY(-1px);
 }
-.admin-raids-detail-button {
+
+/* 완료 처리 버튼 */
+.admin-raids-complete-button {
   border: 0;
   border-radius: 14px;
   padding: 10px 14px;
@@ -200,10 +202,44 @@
   font-weight: 800;
   cursor: pointer;
   transition: transform 0.15s ease, opacity 0.15s ease;
-  background: #eef2ff;
-  color: #2f3aa8;
+  background: #f0fdf4;
+  color: #15803d;
 }
 
-.admin-raids-detail-button:hover {
+.admin-raids-complete-button:hover {
   transform: translateY(-1px);
+  opacity: 0.85;
+}
+
+.admin-raids-complete-button.is-completed {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.admin-raids-complete-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
+/* 완료된 카드 스타일 */
+.admin-raids-card.is-completed {
+  opacity: 0.65;
+  border-color: rgba(134, 239, 172, 0.3);
+  background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+/* 완료 뱃지 */
+.admin-raids-completed-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 900;
+  vertical-align: middle;
+  border: 1px solid #86efac;
 }

@@ -26,10 +26,21 @@ function formatTime(timeString) {
   return `${parts[0]}:${parts[1]}`;
 }
 
-function LobbyCard({ raid, isMyApplied, onClick }) {
+function LobbyCard({
+  raid,
+  user,
+  isMyApplied,
+  onClick,
+  onEdit,
+  onToggleComplete,
+  onDelete,
+  isToggling,
+  isDeleting,
+}) {
   const isFull =
     Number(raid.current_members) >= Number(raid.max_members);
   const isDisabled = isFull && !isMyApplied;
+  const isOwner = user && raid.created_by === user.id;
 
   const parties = raid.parties || [];
 
@@ -87,30 +98,64 @@ function LobbyCard({ raid, isMyApplied, onClick }) {
         </button>
       </div>
 
-      {/* 파티 슬롯 인라인 */}
+      {/* 파티 슬롯 인라인 — 1파티 | 2파티 한 줄 */}
       <div className="lobby-card-parties">
-        {parties.map((party) => (
-          <div key={party.name} className="lobby-party-row">
-            <span className="lobby-party-label">{party.name}</span>
-            <div className="lobby-party-slots">
-              {party.slots.map((member, index) => {
-                const jobClass = member
-                  ? JOB_STYLE_MAP[member.job] || ""
-                  : "is-empty";
-                return (
-                  <div
-                    key={index}
-                    className={`lobby-slot ${jobClass}`}
-                    title={member ? `${member.name} (${member.job})` : "빈 자리"}
-                  >
-                    {member ? (JOB_ABBR[member.job] || member.job[0]) : ""}
-                  </div>
-                );
-              })}
+        {parties.map((party, partyIndex) => (
+          <>
+            {partyIndex > 0 && (
+              <div key={`divider-${partyIndex}`} className="lobby-party-divider" />
+            )}
+            <div key={party.name} className="lobby-party-row">
+              <span className="lobby-party-label">{party.name}</span>
+              <div className="lobby-party-slots">
+                {party.slots.map((member, index) => {
+                  const jobClass = member
+                    ? JOB_STYLE_MAP[member.job] || ""
+                    : "is-empty";
+                  return (
+                    <div
+                      key={index}
+                      className={`lobby-slot ${jobClass}`}
+                      title={member ? `${member.name} (${member.job})` : "빈 자리"}
+                    >
+                      {member ? (JOB_ABBR[member.job] || member.job[0]) : ""}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </>
         ))}
       </div>
+
+      {/* 공대장 전용 관리 버튼 */}
+      {isOwner && (
+        <div className="lobby-card-mgmt" onClick={(e) => e.stopPropagation()}>
+          <button
+            type="button"
+            className="lobby-card-mgmt-btn lobby-card-mgmt-edit"
+            onClick={() => onEdit(raid)}
+          >
+            수정
+          </button>
+          <button
+            type="button"
+            className={`lobby-card-mgmt-btn lobby-card-mgmt-complete${raid.is_completed ? " is-completed" : ""}`}
+            onClick={() => onToggleComplete(raid)}
+            disabled={isToggling}
+          >
+            {isToggling ? "변경 중..." : raid.is_completed ? "활성화" : "완료 처리"}
+          </button>
+          <button
+            type="button"
+            className="lobby-card-mgmt-btn lobby-card-mgmt-delete"
+            onClick={() => onDelete(raid)}
+            disabled={isDeleting}
+          >
+            {isDeleting ? "삭제 중..." : "삭제"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -12,6 +12,7 @@ import {
   formatPowerK,
   getPowerTierClass,
 } from "../../utils/myPageHelpers";
+import { SlotRow } from "./SlotRow";
 import "../../styles/raid.css";
 import "../../styles/raid-modal-panel.css";
 
@@ -210,8 +211,7 @@ function RaidModal({ raid, onClose, onApplied }) {
             <h2 className="raid-modal-title">{raid.title}</h2>
             <p className="raid-modal-meta">
               {formatDateWithDay(raid.raid_date)} / {formatTime(raid.start_time)}
-            </p>
-            <p className="raid-modal-meta">
+              <span className="raid-modal-meta-divider">·</span>
               인원: {applications.length} / {raid.max_members}
             </p>
           </div>
@@ -235,6 +235,50 @@ function RaidModal({ raid, onClose, onApplied }) {
               </button>
             )}
           </div>
+        </div>
+
+        <div className="raid-modal-party-grid">
+          {parties.map((party) => (
+            <div key={party.name} className="raid-modal-party-box">
+              <div className="raid-modal-party-head">
+                <div className="raid-modal-party-title">{party.name}</div>
+
+                <div className="raid-modal-party-average">
+                  평균 전투력{" "}
+                  <span className={getPowerTierClass(party.averagePower || 0)}>
+                    {formatPowerK(party.averagePower || 0)}
+                  </span>
+                </div>
+              </div>
+
+              {!party.hasRequiredSupport && (
+                <div className="raid-modal-party-warning">
+                  치유성 또는 호법성이 필요합니다.
+                </div>
+              )}
+
+              {/* Design Ref: §3.2 — 빈자리 하단 정렬 후 SlotRow 렌더링 */}
+              <div className="raid-modal-slot-list">
+                {[...party.slots]
+                  .sort((a, b) => {
+                    if (a && !b) return -1;
+                    if (!a && b) return 1;
+                    return 0;
+                  })
+                  .map((member, index) => (
+                    <SlotRow
+                      key={index}
+                      member={member}
+                      isMe={
+                        member != null &&
+                        myCharacterId != null &&
+                        String(member.id) === String(myCharacterId)
+                      }
+                    />
+                  ))}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="raid-modal-description-box">
@@ -269,87 +313,6 @@ function RaidModal({ raid, onClose, onApplied }) {
             </div>
           </div>
         )}
-
-        <div className="raid-modal-party-grid">
-          {parties.map((party) => (
-            <div key={party.name} className="raid-modal-party-box">
-              <div className="raid-modal-party-head">
-                <div className="raid-modal-party-title">{party.name}</div>
-
-                <div className="raid-modal-party-average">
-                  평균 전투력{" "}
-                  <span className={getPowerTierClass(party.averagePower || 0)}>
-                    {formatPowerK(party.averagePower || 0)}
-                  </span>
-                </div>
-              </div>
-
-              {!party.hasRequiredSupport && (
-                <div className="raid-modal-party-warning">
-                  치유성 또는 호법성이 필요합니다.
-                </div>
-              )}
-
-              <div className="raid-modal-slot-list">
-                {party.slots.map((member, index) => {
-                  const isMyCharacter =
-                    member &&
-                    myCharacterId &&
-                    String(member.id) === String(myCharacterId);
-
-                  return (
-                    <div
-                      key={index}
-                      className={`raid-modal-slot ${member ? "" : "empty"} ${
-                        isMyCharacter ? "raid-modal-slot-my-character" : ""
-                      }`}
-                    >
-                      {member ? (
-                        <>
-                          <div className="raid-modal-slot-header">
-                            <div className="raid-modal-slot-name">{member.name}</div>
-                          </div>
-
-                          <div className="raid-modal-slot-meta-row">
-                            {isMyCharacter && (
-                              <span className="raid-modal-slot-badge">
-                                내 캐릭터
-                              </span>
-                            )}
-
-                            <span
-                              className={`raid-modal-job-pill ${
-                                JOB_STYLE_MAP[member.job] || ""
-                              }`}
-                            >
-                              {member.job}
-                            </span>
-                          </div>
-
-                          <div className="raid-modal-slot-power-box">
-                            <div className="raid-modal-slot-power-label">
-                              전투력
-                            </div>
-
-                            <div
-                              className={`raid-modal-slot-power ${getPowerTierClass(
-                                member.power
-                              )}`}
-                            >
-                              {formatPowerK(member.power)}
-                            </div>
-                          </div>
-                        </>
-                      ) : (
-                        <div className="raid-modal-slot-empty-text">빈 자리</div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
 
         <div className="raid-modal-apply-section">
           <h3 className="raid-modal-apply-title">내 캐릭터로 신청</h3>

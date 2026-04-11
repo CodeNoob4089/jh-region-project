@@ -306,8 +306,17 @@
   grid-column: 1;
   grid-row: 2;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+}
+
+.lobby-party-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(99, 117, 194, 0.2);
+  margin: 0 12px;
+  flex-shrink: 0;
 }
 
 .lobby-party-row {
@@ -401,6 +410,334 @@
   background: #f3f4f6;
   color: #9ca3af;
   cursor: default;
+}
+
+/* ============================= */
+/* Lobby Card — Management Row   */
+/* ============================= */
+
+.lobby-card-mgmt {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(99, 117, 194, 0.12);
+}
+
+.lobby-card-mgmt-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.lobby-card-mgmt-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+.lobby-card-mgmt-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
+.lobby-card-mgmt-edit {
+  background: rgba(30, 41, 80, 0.9);
+  color: #d5def6;
+  border: 1px solid rgba(99, 117, 194, 0.22);
+}
+
+.lobby-card-mgmt-complete {
+  background: rgba(21, 128, 61, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.lobby-card-mgmt-complete.is-completed {
+  background: rgba(194, 65, 12, 0.15);
+  color: #fb923c;
+  border-color: rgba(251, 146, 60, 0.2);
+}
+
+.lobby-card-mgmt-delete {
+  background: rgba(180, 35, 24, 0.12);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+/* ============================= */
+/* History Accordion             */
+/* ============================= */
+
+.lobby-history {
+  margin-top: 32px;
+  border-top: 1px solid rgba(99, 117, 194, 0.18);
+  padding-top: 16px;
+}
+
+.lobby-history-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 0;
+  color: #8fa3d9;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.15s ease;
+  letter-spacing: 0.02em;
+}
+
+.lobby-history-toggle:hover {
+  color: #d5def6;
+}
+
+.lobby-history-list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lobby-history-empty {
+  padding: 16px 0;
+  color: #8fa3d9;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lobby-history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(99, 117, 194, 0.14);
+  background: rgba(14, 22, 46, 0.55);
+  text-decoration: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.lobby-history-item:hover {
+  border-color: rgba(88, 101, 242, 0.3);
+  background: rgba(18, 28, 58, 0.7);
+}
+
+.lobby-history-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.lobby-history-item-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #d5def6;
+}
+
+.lobby-history-item-desc {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lobby-history-item-meta {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8fa3d9;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ============================= */
+/* RaidCreateModal               */
+/* ============================= */
+
+.rcm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.rcm-panel {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #0f1729 0%, #0a1122 100%);
+  border: 1px solid rgba(99, 117, 194, 0.2);
+  box-shadow: 0 24px 64px rgba(2, 6, 23, 0.6);
+  overflow: hidden;
+}
+
+.rcm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(99, 117, 194, 0.14);
+}
+
+.rcm-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+  color: #f3f4f6;
+  letter-spacing: -0.02em;
+}
+
+.rcm-close {
+  border: 0;
+  background: rgba(99, 117, 194, 0.12);
+  color: #8fa3d9;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.rcm-close:hover {
+  background: rgba(99, 117, 194, 0.22);
+}
+
+.rcm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 24px 24px;
+}
+
+.rcm-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.rcm-label {
+  font-size: 12px;
+  font-weight: 800;
+  color: #8fa3d9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rcm-input {
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid rgba(99, 117, 194, 0.22);
+  border-radius: 12px;
+  background: rgba(10, 17, 34, 0.8);
+  color: #d5def6;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rcm-input:focus {
+  border-color: #5865f2;
+}
+
+.rcm-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rcm-time-row {
+  display: flex;
+  gap: 8px;
+}
+
+.rcm-time-row .rcm-input {
+  flex: 1;
+}
+
+.rcm-textarea {
+  padding: 10px 12px;
+  border: 1px solid rgba(99, 117, 194, 0.22);
+  border-radius: 12px;
+  background: rgba(10, 17, 34, 0.8);
+  color: #d5def6;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+  line-height: 1.5;
+  transition: border-color 0.15s ease;
+}
+
+.rcm-textarea:focus {
+  border-color: #5865f2;
+}
+
+.rcm-textarea::placeholder {
+  color: #4b5563;
+}
+
+.rcm-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.rcm-btn {
+  height: 42px;
+  padding: 0 20px;
+  border-radius: 12px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.rcm-btn:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.rcm-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+  transform: none;
+}
+
+.rcm-btn-cancel {
+  background: rgba(99, 117, 194, 0.12);
+  color: #8fa3d9;
+}
+
+.rcm-btn-submit {
+  background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(88, 101, 242, 0.28);
 }
 
 /* ============================= */

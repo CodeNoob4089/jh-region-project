@@ -2,12 +2,22 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { buildRaidParties } from "../utils/buildRaidParties";
 
+function getLocalDateStr(date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 function useRaids() {
   const [raids, setRaids] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchRaids = useCallback(async () => {
     setLoading(true);
+
+    // 7일 전부터 미래까지 조회 (시작 시간 기준 4시간 경과 여부는 클라이언트에서 판단)
+    const sevenDaysAgo = getLocalDateStr(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000));
 
     const { data, error } = await supabase
       .from("raids")
@@ -20,6 +30,7 @@ function useRaids() {
         description,
         is_completed,
         completed_at,
+        created_by,
         raid_applications (
           id,
           user_id,
@@ -33,7 +44,7 @@ function useRaids() {
           )
         )
       `)
-      .eq("is_completed", false);
+      .gte("raid_date", sevenDaysAgo);
 
     if (error) {
       console.error("레이드 불러오기 실패:", error.message);
