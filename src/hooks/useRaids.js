@@ -85,7 +85,26 @@ function useRaids() {
       return a.start_time.localeCompare(b.start_time);
     });
 
-    setRaids(sorted);
+    // 방장 대표 캐릭터 조회
+    const hostIds = [...new Set(mappedRaids.map((r) => r.created_by).filter(Boolean))];
+    let hostCharacterMap = {};
+    if (hostIds.length > 0) {
+      const { data: hostChars } = await supabase
+        .from("characters")
+        .select("user_id, name, job")
+        .in("user_id", hostIds)
+        .eq("is_main", true);
+      for (const c of hostChars || []) {
+        hostCharacterMap[c.user_id] = { name: c.name, job: c.job };
+      }
+    }
+
+    const withHost = sorted.map((raid) => ({
+      ...raid,
+      hostCharacter: hostCharacterMap[raid.created_by] || null,
+    }));
+
+    setRaids(withHost);
     setLoading(false);
   }, []);
 

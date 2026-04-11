@@ -3,9 +3,13 @@ import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
 import { supabase } from "../../lib/supabase";
 import { useAuthContext } from "../../context/AuthContext";
+import useMyCharacters from "../../hooks/useMyCharacters";
 
 function RaidCreateModal({ isOpen, onClose, onCreated }) {
   const { user } = useAuthContext();
+  const { characters } = useMyCharacters(user);
+
+  const mainCharacter = characters.find((c) => c.is_main) || characters[0] || null;
 
   const [submitting, setSubmitting] = useState(false);
   const [title, setTitle] = useState("");
@@ -76,6 +80,18 @@ function RaidCreateModal({ isOpen, onClose, onCreated }) {
         </div>
 
         <form onSubmit={handleSubmit} className="rcm-form">
+          {/* 방장 표시 */}
+          <div className="rcm-group">
+            <label className="rcm-label">방장</label>
+            <div className="rcm-host-display">
+              {mainCharacter ? (
+                <span className="rcm-host-name">{mainCharacter.name}</span>
+              ) : (
+                <span className="rcm-host-empty">마이페이지에서 대표 캐릭터를 등록해주세요</span>
+              )}
+            </div>
+          </div>
+
           <div className="rcm-group">
             <label className="rcm-label">공격대 제목</label>
             <select

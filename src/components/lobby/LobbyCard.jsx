@@ -1,5 +1,6 @@
 import { JOB_STYLE_MAP } from "../../utils/myPageHelpers";
 
+
 const JOB_ABBR = {
   검성: "검",
   수호성: "수호",
@@ -81,6 +82,13 @@ function LobbyCard({
             {raid.current_members}/{raid.max_members}명
           </span>
         </div>
+
+        {raid.hostCharacter && (
+          <div className="lobby-card-host">
+            <span className="lobby-card-host-label">방장</span>
+            <span className="lobby-card-host-name">{raid.hostCharacter.name}</span>
+          </div>
+        )}
       </div>
 
       {/* 신청 버튼 */}

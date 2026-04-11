@@ -293,6 +293,35 @@
   color: #9ca3af;
 }
 
+.lobby-card-host {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.lobby-card-host-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.lobby-card-host-job {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  border: 1.5px solid transparent;
+}
+
+.lobby-card-host-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af;
+}
+
 /* Card action: button */
 .lobby-card-action {
   grid-column: 2;
@@ -738,6 +767,40 @@
   background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
   color: #ffffff;
   box-shadow: 0 8px 20px rgba(88, 101, 242, 0.28);
+}
+
+/* 방장 표시 */
+.rcm-host-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid rgba(99, 117, 194, 0.22);
+  border-radius: 12px;
+  background: rgba(10, 17, 34, 0.5);
+}
+
+.rcm-host-job {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1.5px solid transparent;
+}
+
+.rcm-host-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #d5def6;
+}
+
+.rcm-host-empty {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
 }
 
 /* ============================= */
