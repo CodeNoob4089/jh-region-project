@@ -1,35 +1,12 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import MyPage from "./pages/MyPage";
-import RaidsPage from "./pages/RaidsPage";
+import { Routes, Route } from "react-router-dom";
 import LobbyPage from "./pages/LobbyPage";
-import LobbyCreatePage from "./pages/LobbyCreatePage";
-import AdminRaidCreatePage from "./pages/AdminRaidCreatePage";
-import AdminRaidsPage from "./pages/AdminRaidsPage";
-import AdminRaidEditPage from "./pages/AdminRaidEditPage";
-import AdminRaidDetailPage from "./pages/AdminRaidDetailPage";
-import RaidHistoryPage from "./pages/RaidHistoryPage";
-import RaidHistoryDetailPage from "./pages/RaidHistoryDetailPage";
+import MyPage from "./pages/MyPage";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<LobbyPage />} />
-      <Route path="/lobby" element={<Navigate to="/" replace />} />
-      <Route path="/lobby/new" element={<LobbyCreatePage />} />
       <Route path="/mypage" element={<MyPage />} />
-      <Route path="/raids" element={<RaidsPage />} />
-
-      <Route path="/raids/new" element={<AdminRaidCreatePage />} />
-      <Route path="/raids/manage" element={<AdminRaidsPage />} />
-      <Route path="/raids/:raidId/edit" element={<AdminRaidEditPage />} />
-      <Route path="/raids/:raidId" element={<AdminRaidDetailPage />} />
-
-      <Route path="/raids/history" element={<RaidHistoryPage />} />
-      <Route
-        path="/raids/history/:raidId"
-        element={<RaidHistoryDetailPage />}
-      />
     </Routes>
   );
 }

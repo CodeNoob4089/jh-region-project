@@ -78,17 +78,17 @@ function LobbyCard({
           <span className="lobby-card-time">
             {formatDateWithDay(raid.raid_date)} {formatTime(raid.start_time)}
           </span>
+          {raid.hostCharacter && (
+            <>
+              <span className="lobby-card-meta-sep">·</span>
+              <span className="lobby-card-host-name">{raid.hostCharacter.name}</span>
+            </>
+          )}
+          <span className="lobby-card-meta-sep">·</span>
           <span className={`lobby-card-count ${isFull ? "is-full" : ""}`}>
             {raid.current_members}/{raid.max_members}명
           </span>
         </div>
-
-        {raid.hostCharacter && (
-          <div className="lobby-card-host">
-            <span className="lobby-card-host-label">방장</span>
-            <span className="lobby-card-host-name">{raid.hostCharacter.name}</span>
-          </div>
-        )}
       </div>
 
       {/* 신청 버튼 */}

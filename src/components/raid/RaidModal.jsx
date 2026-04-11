@@ -241,7 +241,12 @@ function RaidModal({ raid, onClose, onApplied }) {
           {parties.map((party) => (
             <div key={party.name} className="raid-modal-party-box">
               <div className="raid-modal-party-head">
-                <div className="raid-modal-party-title">{party.name}</div>
+                <div className="raid-modal-party-title-row">
+                  <div className="raid-modal-party-title">{party.name}</div>
+                  {!party.hasRequiredSupport && (
+                    <span className="raid-modal-party-warning-tag">힐러 없음</span>
+                  )}
+                </div>
 
                 <div className="raid-modal-party-average">
                   평균 전투력{" "}
@@ -250,12 +255,6 @@ function RaidModal({ raid, onClose, onApplied }) {
                   </span>
                 </div>
               </div>
-
-              {!party.hasRequiredSupport && (
-                <div className="raid-modal-party-warning">
-                  치유성 또는 호법성이 필요합니다.
-                </div>
-              )}
 
               {/* Design Ref: §3.2 — 빈자리 하단 정렬 후 SlotRow 렌더링 */}
               <div className="raid-modal-slot-list">
@@ -287,32 +286,6 @@ function RaidModal({ raid, onClose, onApplied }) {
             {getModalDescription(raid.description)}
           </div>
         </div>
-
-        {myApplication && myCharacter && (
-          <div className="raid-modal-summary">
-            <span className="raid-modal-summary-label">현재 신청 캐릭터</span>
-
-            <div className="raid-modal-summary-main">
-              <span className="raid-modal-summary-name">{myCharacter.name}</span>
-
-              <span
-                className={`raid-modal-job-pill ${
-                  JOB_STYLE_MAP[myCharacter.job] || ""
-                }`}
-              >
-                {myCharacter.job}
-              </span>
-
-              <span
-                className={`raid-modal-summary-power ${getPowerTierClass(
-                  myCharacter.power
-                )}`}
-              >
-                {formatPowerK(myCharacter.power)}
-              </span>
-            </div>
-          </div>
-        )}
 
         <div className="raid-modal-apply-section">
           <h3 className="raid-modal-apply-title">내 캐릭터로 신청</h3>

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 import Layout from "../layout/Layout";
@@ -10,6 +10,7 @@ import { supabase } from "../lib/supabase";
 import LobbyCard from "../components/lobby/LobbyCard";
 import RaidModal from "../components/raid/RaidModal";
 import RaidCreateModal from "../components/lobby/RaidCreateModal";
+import RaidEditModal from "../components/lobby/RaidEditModal";
 import "../styles/lobby.css";
 
 const RAID_TYPES = ["심연의재련: 루드라", "침식의 정화소"];
@@ -52,7 +53,6 @@ function getRaidStatusOrder(raid, myAppliedRaidIds) {
 }
 
 function LobbyPage() {
-  const navigate = useNavigate();
   const { user } = useAuthContext();
   const { raids, loading, refetchRaids } = useRaids();
   const { myApplications } = useMyApplications(user);
@@ -64,6 +64,7 @@ function LobbyPage() {
   const [sortOrder, setSortOrder] = useState("time");
   const [selectedRaid, setSelectedRaid] = useState(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [editingRaidId, setEditingRaidId] = useState(null);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [historyRaids, setHistoryRaids] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
@@ -282,7 +283,7 @@ function LobbyPage() {
                 user={user}
                 isMyApplied={myAppliedRaidIds.has(String(raid.id))}
                 onClick={(r) => setSelectedRaid(r)}
-                onEdit={(r) => navigate(`/raids/${r.id}/edit`)}
+                onEdit={(r) => setEditingRaidId(r.id)}
                 onToggleComplete={handleToggleComplete}
                 onDelete={handleDelete}
                 isToggling={togglingRaidId === raid.id}
@@ -352,6 +353,13 @@ function LobbyPage() {
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onCreated={refetchRaids}
+      />
+
+      <RaidEditModal
+        raidId={editingRaidId}
+        isOpen={!!editingRaidId}
+        onClose={() => setEditingRaidId(null)}
+        onSaved={() => { setEditingRaidId(null); refetchRaids(); }}
       />
     </Layout>
   );

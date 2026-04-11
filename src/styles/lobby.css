@@ -260,6 +260,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .lobby-card-name {
@@ -273,8 +274,15 @@
 .lobby-card-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 6px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.lobby-card-meta-sep {
+  color: #4b5563;
+  font-size: 12px;
+  flex-shrink: 0;
 }
 
 .lobby-card-time {
@@ -338,6 +346,13 @@
   flex-direction: row;
   align-items: center;
   gap: 0;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.lobby-card-parties::-webkit-scrollbar {
+  display: none;
 }
 
 .lobby-party-divider {
@@ -394,14 +409,14 @@
 }
 
 /* filled slot uses JOB_STYLE_MAP colors via compound class */
-.lobby-slot.job-warrior  { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
-.lobby-slot.job-guardian { background: #fff7ed; color: #d97706; border-color: #fed7aa; }
-.lobby-slot.job-assassin { background: #faf5ff; color: #9333ea; border-color: #e9d5ff; }
-.lobby-slot.job-archer   { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
-.lobby-slot.job-mage     { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
-.lobby-slot.job-spirit   { background: #f0fdfa; color: #0f766e; border-color: #99f6e4; }
-.lobby-slot.job-support  { background: #fff7ed; color: #ea580c; border-color: #fdba74; }
-.lobby-slot.job-healer   { background: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
+.lobby-slot.job-warrior  { background: #e0f2fe; color: #0284c7; border-color: #7dd3fc; }
+.lobby-slot.job-guardian { background: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+.lobby-slot.job-assassin { background: #ecfccb; color: #65a30d; border-color: #bef264; }
+.lobby-slot.job-archer   { background: #dcfce7; color: #16a34a; border-color: #86efac; }
+.lobby-slot.job-mage     { background: #ede9fe; color: #6d28d9; border-color: #c4b5fd; }
+.lobby-slot.job-spirit   { background: #fce7f3; color: #be185d; border-color: #f9a8d4; }
+.lobby-slot.job-support  { background: #ffedd5; color: #c2410c; border-color: #fed7aa; }
+.lobby-slot.job-healer   { background: #fef9c3; color: #a16207; border-color: #fde047; }
 
 /* Apply button */
 .lobby-apply-btn {
@@ -845,23 +860,37 @@
 
   .lobby-card {
     padding: 14px 16px;
-    gap: 10px 12px;
+    gap: 8px 10px;
   }
 
   .lobby-card-name {
     font-size: 14px;
   }
 
+  /* 모바일: 버튼은 row 1만 차지 */
+  .lobby-card-action {
+    grid-row: 1;
+    align-items: flex-start;
+  }
+
+  /* 모바일: 파티 슬롯은 full width로 */
+  .lobby-card-parties {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
   .lobby-slot {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     font-size: 9px;
     border-radius: 8px;
+    flex-shrink: 0;
   }
 
   .lobby-apply-btn {
-    padding: 8px 12px;
+    padding: 7px 11px;
     font-size: 12px;
+    white-space: nowrap;
   }
 
   .lobby-tabs {

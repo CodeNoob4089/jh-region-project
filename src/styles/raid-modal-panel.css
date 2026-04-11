@@ -48,9 +48,21 @@
   overflow-y: auto;
   border-radius: 30px;
   background:
-    radial-gradient(circle at top left, rgba(88, 101, 242, 0.14), transparent 20%),
-    radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.12), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.985) 0%, rgba(248, 250, 252, 0.985) 100%);
+    radial-gradient(
+      circle at top left,
+      rgba(88, 101, 242, 0.14),
+      transparent 20%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(139, 92, 246, 0.12),
+      transparent 22%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.985) 0%,
+      rgba(248, 250, 252, 0.985) 100%
+    );
   border: 1px solid rgba(88, 101, 242, 0.12);
   box-shadow:
     0 28px 70px rgba(2, 6, 23, 0.38),
@@ -80,15 +92,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
-  padding: 26px 26px 16px;
+  gap: 12px;
+  padding: 16px 22px 12px;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .raid-modal-header-left {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .raid-modal-kicker {
@@ -102,7 +114,7 @@
 .raid-modal-title {
   margin: 0;
   color: #0f172a;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 900;
   letter-spacing: -0.03em;
 }
@@ -153,11 +165,14 @@
 /* ============================= */
 .raid-modal-description-box {
   position: relative;
-  margin: 0 26px 0;
-  padding: 16px 18px 16px 20px;
+  margin: 10px 22px 0;
+  padding: 12px 16px 12px 18px;
   border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(247, 250, 255, 0.99) 0%, rgba(238, 244, 255, 0.97) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(247, 250, 255, 0.99) 0%,
+    rgba(238, 244, 255, 0.97) 100%
+  );
   border: 1px solid rgba(99, 102, 241, 0.16);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.96),
@@ -167,7 +182,7 @@
 }
 
 .raid-modal-description-box::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0 auto 0 0;
   width: 4px;
@@ -175,13 +190,17 @@
 }
 
 .raid-modal-description-box::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   right: 0;
   width: 120px;
   height: 120px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.14) 0%, transparent 72%);
+  background: radial-gradient(
+    circle,
+    rgba(99, 102, 241, 0.14) 0%,
+    transparent 72%
+  );
   pointer-events: none;
 }
 
@@ -191,9 +210,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: #4f46e5;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -201,7 +220,7 @@
 }
 
 .raid-modal-description-label::before {
-  content: "◆";
+  content: '◆';
   font-size: 9px;
   color: #7c3aed;
 }
@@ -264,46 +283,59 @@
 .raid-modal-party-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  padding: 16px 26px;
+  gap: 10px;
+  margin: 12px 22px 0;
 }
 
 .raid-modal-party-box {
-  padding: 18px;
-  border-radius: 22px;
+  padding: 12px;
+  border-radius: 16px;
   border: 1px solid rgba(15, 23, 42, 0.08);
   background:
-    radial-gradient(circle at top right, rgba(88, 101, 242, 0.08), transparent 30%),
+    radial-gradient(
+      circle at top right,
+      rgba(88, 101, 242, 0.08),
+      transparent 30%
+    ),
     linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
 }
 
 .raid-modal-party-head {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .raid-modal-party-title {
   color: #111827;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 900;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
 }
 
 .raid-modal-party-average {
   color: #6b7280;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 700;
 }
 
-.raid-modal-party-warning {
-  margin-bottom: 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
+.raid-modal-party-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.raid-modal-party-warning-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
   background: #fff7ed;
   color: #c2410c;
   border: 1px solid #fdba74;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .raid-modal-slot-list {
@@ -318,9 +350,9 @@
 .slot-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 12px;
-  border-radius: 10px;
+  gap: 8px;
+  padding: 5px 10px;
+  border-radius: 8px;
   border: 1px solid rgba(15, 23, 42, 0.07);
   background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
 }
@@ -330,20 +362,24 @@
   background: #f3f4f6;
   border-style: dashed;
   border-color: rgba(15, 23, 42, 0.12);
-  padding: 6px 12px;
+  padding: 5px 10px;
 }
 
 .slot-row--mine {
   border-color: rgba(79, 70, 229, 0.28);
   background:
-    radial-gradient(circle at top left, rgba(99, 102, 241, 0.10), transparent 50%),
+    radial-gradient(
+      circle at top left,
+      rgba(99, 102, 241, 0.1),
+      transparent 50%
+    ),
     linear-gradient(135deg, #f8faff 0%, #eef2ff 100%);
 }
 
 .slot-row-name {
   flex: 1;
   color: #111827;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: -0.01em;
   overflow: hidden;
@@ -409,7 +445,11 @@
 .raid-modal-slot-my-character {
   border-color: rgba(79, 70, 229, 0.28);
   background:
-    radial-gradient(circle at top left, rgba(99, 102, 241, 0.12), transparent 34%),
+    radial-gradient(
+      circle at top left,
+      rgba(99, 102, 241, 0.12),
+      transparent 34%
+    ),
     linear-gradient(135deg, #f8faff 0%, #eef2ff 52%, #f8fafc 100%);
   box-shadow: 0 14px 28px rgba(79, 70, 229, 0.12);
 }
@@ -487,13 +527,13 @@
 /* Apply Section */
 /* ============================= */
 .raid-modal-apply-section {
-  padding: 24px 26px 26px;
+  padding: 12px 22px 18px;
 }
 
 .raid-modal-apply-title {
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   color: #0f172a;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 900;
   letter-spacing: -0.02em;
 }
@@ -503,7 +543,11 @@
   border-radius: 20px;
   border: 1px solid rgba(99, 102, 241, 0.12);
   background:
-    radial-gradient(circle at top right, rgba(88, 101, 242, 0.06), transparent 30%),
+    radial-gradient(
+      circle at top right,
+      rgba(88, 101, 242, 0.06),
+      transparent 30%
+    ),
     linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.85),
@@ -529,11 +573,15 @@
 
 .raid-modal-character-button {
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   border: 1px solid rgba(99, 102, 241, 0.12);
   border-radius: 20px;
   background:
-    radial-gradient(circle at top right, rgba(88, 101, 242, 0.08), transparent 32%),
+    radial-gradient(
+      circle at top right,
+      rgba(88, 101, 242, 0.08),
+      transparent 32%
+    ),
     linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
   text-align: left;
   cursor: pointer;
@@ -552,10 +600,14 @@
   transform: translateY(-2px);
   border-color: rgba(88, 101, 242, 0.26);
   background:
-    radial-gradient(circle at top right, rgba(88, 101, 242, 0.12), transparent 32%),
+    radial-gradient(
+      circle at top right,
+      rgba(88, 101, 242, 0.12),
+      transparent 32%
+    ),
     linear-gradient(180deg, #ffffff 0%, #eef2ff 100%);
   box-shadow:
-    0 16px 30px rgba(79, 70, 229, 0.10),
+    0 16px 30px rgba(79, 70, 229, 0.1),
     0 0 0 1px rgba(88, 101, 242, 0.06);
   filter: brightness(1.01);
 }
@@ -608,8 +660,11 @@
   min-width: 116px;
   padding: 10px 12px;
   border-radius: 16px;
-  background:
-    linear-gradient(180deg, rgba(241, 245, 249, 0.95) 0%, rgba(248, 250, 252, 1) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(241, 245, 249, 0.95) 0%,
+    rgba(248, 250, 252, 1) 100%
+  );
   border: 1px solid rgba(148, 163, 184, 0.14);
   display: flex;
   flex-direction: column;
@@ -634,8 +689,7 @@
 
 .raid-modal-cancel-button {
   border: 1px solid rgba(239, 68, 68, 0.14);
-  background:
-    linear-gradient(180deg, #fff5f5 0%, #ffe8e8 100%);
+  background: linear-gradient(180deg, #fff5f5 0%, #ffe8e8 100%);
   color: #b42318;
   font-weight: 800;
   box-shadow:
@@ -646,12 +700,79 @@
 .raid-modal-cancel-button:hover {
   transform: translateY(-2px);
   border-color: rgba(239, 68, 68, 0.24);
-  background:
-    linear-gradient(180deg, #fff1f1 0%, #ffdede 100%);
+  background: linear-gradient(180deg, #fff1f1 0%, #ffdede 100%);
   box-shadow:
-    0 14px 24px rgba(180, 35, 24, 0.10),
+    0 14px 24px rgba(180, 35, 24, 0.1),
     0 0 0 1px rgba(239, 68, 68, 0.04);
   filter: brightness(1.01);
+}
+
+/* ============================= */
+/* Job Pill — Base               */
+/* ============================= */
+.raid-modal-job-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  border: 1px solid transparent;
+  width: fit-content;
+}
+
+/* ============================= */
+/* Job Pill Colors               */
+/* ============================= */
+.raid-modal-job-pill.job-warrior {
+  background: #e0f2fe;
+  color: #0284c7;
+  border-color: #7dd3fc;
+}
+
+.raid-modal-job-pill.job-guardian {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #93c5fd;
+}
+
+.raid-modal-job-pill.job-assassin {
+  background: #ecfccb;
+  color: #65a30d;
+  border-color: #bef264;
+}
+
+.raid-modal-job-pill.job-archer {
+  background: #dcfce7;
+  color: #16a34a;
+  border-color: #86efac;
+}
+
+.raid-modal-job-pill.job-mage {
+  background: #ede9fe;
+  color: #6d28d9;
+  border-color: #c4b5fd;
+}
+
+.raid-modal-job-pill.job-spirit {
+  background: #fce7f3;
+  color: #be185d;
+  border-color: #f9a8d4;
+}
+
+.raid-modal-job-pill.job-support {
+  background: #ffedd5;
+  color: #c2410c;
+  border-color: #fed7aa;
+}
+
+.raid-modal-job-pill.job-healer {
+  background: #fef9c3;
+  color: #a16207;
+  border-color: #fde047;
 }
 
 /* ============================= */
@@ -659,7 +780,7 @@
 /* ============================= */
 @media (max-width: 900px) {
   .raid-modal-party-grid,
-.raid-modal-character-buttons {
+  .raid-modal-character-buttons {
     grid-template-columns: 1fr;
   }
 }
@@ -685,10 +806,11 @@
   .raid-modal-summary {
     margin-left: 20px;
     margin-right: 20px;
+    margin-top: 10px;
   }
 
   .raid-modal-party-grid {
-    padding: 16px 20px 0;
+    padding: 0;
   }
 
   .raid-modal-apply-section {

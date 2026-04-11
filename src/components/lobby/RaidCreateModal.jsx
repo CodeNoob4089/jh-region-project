@@ -5,6 +5,11 @@ import { supabase } from "../../lib/supabase";
 import { useAuthContext } from "../../context/AuthContext";
 import useMyCharacters from "../../hooks/useMyCharacters";
 
+function getTodayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
 function RaidCreateModal({ isOpen, onClose, onCreated }) {
   const { user } = useAuthContext();
   const { characters } = useMyCharacters(user);
@@ -13,7 +18,7 @@ function RaidCreateModal({ isOpen, onClose, onCreated }) {
 
   const [submitting, setSubmitting] = useState(false);
   const [title, setTitle] = useState("");
-  const [raidDate, setRaidDate] = useState("");
+  const [raidDate, setRaidDate] = useState(getTodayStr);
   const [selectedHour, setSelectedHour] = useState("22");
   const [selectedMinute, setSelectedMinute] = useState("00");
   const [description, setDescription] = useState("");
@@ -29,7 +34,7 @@ function RaidCreateModal({ isOpen, onClose, onCreated }) {
 
   const handleClose = () => {
     setTitle("");
-    setRaidDate("");
+    setRaidDate(getTodayStr());
     setSelectedHour("22");
     setSelectedMinute("00");
     setDescription("");
