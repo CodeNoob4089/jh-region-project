@@ -1,0 +1,475 @@
+/* ============================= */
+/* Lobby Page                    */
+/* ============================= */
+
+.lobby-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+.lobby-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.lobby-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 900;
+  color: #f3f4f6;
+  letter-spacing: -0.03em;
+}
+
+.lobby-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lobby-sort-select {
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(99, 117, 194, 0.22);
+  border-radius: 10px;
+  background: rgba(10, 17, 34, 0.82);
+  color: #d5def6;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+.lobby-sort-select:focus {
+  border-color: #5865f2;
+}
+
+.lobby-create-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #5865f2 0%, #7c3aed 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.lobby-create-link:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* ============================= */
+/* Summary Bar                   */
+/* ============================= */
+
+.lobby-summary-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.lobby-summary-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(99, 117, 194, 0.18);
+  background: rgba(14, 22, 46, 0.6);
+}
+
+.lobby-summary-item.is-accent {
+  border-color: rgba(88, 101, 242, 0.32);
+  background: rgba(88, 101, 242, 0.12);
+}
+
+.lobby-summary-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #8fa3d9;
+  letter-spacing: 0.02em;
+}
+
+.lobby-summary-value {
+  font-size: 14px;
+  font-weight: 900;
+  color: #e5e7eb;
+  letter-spacing: -0.01em;
+}
+
+.lobby-summary-item.is-accent .lobby-summary-value {
+  color: #a5b4fc;
+}
+
+/* ============================= */
+/* Tabs                          */
+/* ============================= */
+
+.lobby-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(99, 117, 194, 0.18);
+  padding-bottom: 0;
+}
+
+.lobby-tab {
+  position: relative;
+  padding: 10px 18px 12px;
+  border: 0;
+  background: none;
+  color: #8fa3d9;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+
+.lobby-tab::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #5865f2;
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform 0.18s ease;
+}
+
+.lobby-tab.is-active {
+  color: #5865f2;
+}
+
+.lobby-tab.is-active::after {
+  transform: scaleX(1);
+}
+
+.lobby-tab:hover {
+  color: #d5def6;
+}
+
+.lobby-tab.is-active:hover {
+  color: #5865f2;
+}
+
+.lobby-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(88, 101, 242, 0.22);
+  color: #a5b4fc;
+  font-size: 11px;
+  font-weight: 900;
+  vertical-align: middle;
+}
+
+.lobby-tab.is-active .lobby-tab-count {
+  background: #5865f2;
+  color: #ffffff;
+}
+
+/* ============================= */
+/* Card List                     */
+/* ============================= */
+
+.lobby-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lobby-empty {
+  padding: 48px 0;
+  text-align: center;
+  color: #8fa3d9;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* ============================= */
+/* Lobby Card                    */
+/* ============================= */
+
+.lobby-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+  gap: 12px 16px;
+  align-items: center;
+  padding: 16px 20px;
+  border-radius: 20px;
+  border: 1.5px solid rgba(99, 117, 194, 0.16);
+  background: linear-gradient(180deg, rgba(14, 22, 46, 0.82) 0%, rgba(10, 17, 34, 0.78) 100%);
+  box-shadow: 0 4px 16px rgba(2, 6, 23, 0.24);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+  cursor: pointer;
+}
+
+.lobby-card:hover {
+  border-color: rgba(88, 101, 242, 0.42);
+  box-shadow: 0 8px 28px rgba(88, 101, 242, 0.18);
+  transform: translateY(-2px);
+}
+
+.lobby-card.is-applied {
+  border-color: rgba(88, 101, 242, 0.55);
+  background:
+    radial-gradient(circle at top left, rgba(88, 101, 242, 0.14), transparent 40%),
+    linear-gradient(180deg, rgba(18, 24, 56, 0.92) 0%, rgba(12, 18, 44, 0.88) 100%);
+  box-shadow: 0 6px 24px rgba(88, 101, 242, 0.22);
+}
+
+.lobby-card.is-full {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.lobby-card.is-full:hover {
+  transform: none;
+  box-shadow: 0 4px 16px rgba(2, 6, 23, 0.24);
+  border-color: rgba(99, 117, 194, 0.16);
+}
+
+/* Card top row: name + meta */
+.lobby-card-info {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lobby-card-name {
+  font-size: 16px;
+  font-weight: 900;
+  color: #f3f4f6;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.lobby-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.lobby-card-time {
+  font-size: 13px;
+  font-weight: 700;
+  color: #5865f2;
+}
+
+.lobby-card-count {
+  font-size: 13px;
+  font-weight: 800;
+  color: #d1d5db;
+}
+
+.lobby-card-count.is-full {
+  color: #9ca3af;
+}
+
+/* Card action: button */
+.lobby-card-action {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  display: flex;
+  align-items: center;
+}
+
+/* Party slots */
+.lobby-card-parties {
+  grid-column: 1;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lobby-party-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lobby-party-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #8fa3d9;
+  width: 32px;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+
+.lobby-party-slots {
+  display: flex;
+  gap: 4px;
+}
+
+/* Individual slot */
+.lobby-slot {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 900;
+  border: 1.5px solid transparent;
+  transition: transform 0.12s ease;
+  flex-shrink: 0;
+}
+
+.lobby-slot:hover {
+  transform: scale(1.08);
+}
+
+.lobby-slot.is-empty {
+  background: #f3f4f6;
+  border-color: #e5e7eb;
+  border-style: dashed;
+}
+
+/* filled slot uses JOB_STYLE_MAP colors via compound class */
+.lobby-slot.job-warrior  { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+.lobby-slot.job-guardian { background: #fff7ed; color: #d97706; border-color: #fed7aa; }
+.lobby-slot.job-assassin { background: #faf5ff; color: #9333ea; border-color: #e9d5ff; }
+.lobby-slot.job-archer   { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+.lobby-slot.job-mage     { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+.lobby-slot.job-spirit   { background: #f0fdfa; color: #0f766e; border-color: #99f6e4; }
+.lobby-slot.job-support  { background: #fff7ed; color: #ea580c; border-color: #fdba74; }
+.lobby-slot.job-healer   { background: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
+
+/* Apply button */
+.lobby-apply-btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 0;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.lobby-apply-btn.is-open {
+  background: linear-gradient(135deg, #5865f2 0%, #7c3aed 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(88, 101, 242, 0.3);
+}
+
+.lobby-apply-btn.is-open:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.lobby-apply-btn.is-applied {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.lobby-apply-btn.is-applied:hover {
+  opacity: 0.85;
+}
+
+.lobby-apply-btn.is-full {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: default;
+}
+
+/* ============================= */
+/* Modal — host delete button    */
+/* ============================= */
+
+.raid-modal-header-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.raid-modal-delete-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  background: #fff1f1;
+  color: #b42318;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.raid-modal-delete-button:hover {
+  background: #ffe4e4;
+}
+
+/* ============================= */
+/* Responsive                    */
+/* ============================= */
+
+@media (max-width: 600px) {
+  .lobby-page {
+    padding: 20px 14px 48px;
+  }
+
+  .lobby-title {
+    font-size: 22px;
+  }
+
+  .lobby-card {
+    padding: 14px 16px;
+    gap: 10px 12px;
+  }
+
+  .lobby-card-name {
+    font-size: 14px;
+  }
+
+  .lobby-slot {
+    width: 30px;
+    height: 30px;
+    font-size: 9px;
+    border-radius: 8px;
+  }
+
+  .lobby-apply-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .lobby-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .lobby-tabs::-webkit-scrollbar {
+    display: none;
+  }
+}

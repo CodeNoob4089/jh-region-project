@@ -1,7 +1,9 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import MyPage from "./pages/MyPage";
 import RaidsPage from "./pages/RaidsPage";
+import LobbyPage from "./pages/LobbyPage";
+import LobbyCreatePage from "./pages/LobbyCreatePage";
 import AdminRaidCreatePage from "./pages/AdminRaidCreatePage";
 import AdminRaidsPage from "./pages/AdminRaidsPage";
 import AdminRaidEditPage from "./pages/AdminRaidEditPage";
@@ -12,7 +14,9 @@ import RaidHistoryDetailPage from "./pages/RaidHistoryDetailPage";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<LobbyPage />} />
+      <Route path="/lobby" element={<Navigate to="/" replace />} />
+      <Route path="/lobby/new" element={<LobbyCreatePage />} />
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/raids" element={<RaidsPage />} />
 

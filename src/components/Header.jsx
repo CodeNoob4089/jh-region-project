@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { supabase } from "../lib/supabase";
 import logo from "../assets/logo.png";
 
-function Header({ user }) {
+function Header({ user, onSidebarOpen, isSidebarOpen }) {
   const navigate = useNavigate();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const profileMenuRef = useRef(null);
@@ -67,14 +67,24 @@ function Header({ user }) {
   return (
     <header className="app-header">
       <div className="app-header-inner">
-<Link
-  to="/"
-  state={{ refreshHome: Date.now() }}
-  className="app-logo"
-  aria-label="홈으로 이동"
->
-  <img src={logo} alt="JH 로고" className="app-logo-image" />
-</Link>
+        <div className="app-header-left">
+          <button
+            type="button"
+            className={`app-header-sidebar-toggle ${isSidebarOpen ? "is-hidden" : ""}`}
+            onClick={onSidebarOpen}
+            aria-label="사이드바 열기"
+          >
+            ☰
+          </button>
+
+          <Link
+            to="/"
+            className="app-logo"
+            aria-label="홈으로 이동"
+          >
+            <img src={logo} alt="JH 로고" className="app-logo-image" />
+          </Link>
+        </div>
 
         <div className="app-header-right">
           {user ? (

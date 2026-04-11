@@ -17,18 +17,7 @@ function Layout({ children }) {
 
   return (
     <div className="app-shell">
-      <Header user={user} />
-
-      <button
-        type="button"
-        className={`app-floating-sidebar-toggle ${
-          isSidebarOpen ? "is-hidden" : ""
-        }`}
-        onClick={handleOpenSidebar}
-        aria-label="사이드바 열기"
-      >
-        ☰
-      </button>
+      <Header user={user} onSidebarOpen={handleOpenSidebar} isSidebarOpen={isSidebarOpen} />
 
       <Sidebar
         user={user}

@@ -50,6 +50,31 @@ function RaidModal({ raid, onClose, onApplied }) {
   const { applications, refetchApplications } = useRaidApplications(raid?.id);
   const { myApplications, refetchMyApplications } = useMyApplications(user);
 
+  const isHost =
+    user && raid?.created_by && String(raid.created_by) === String(user.id);
+
+  const handleDeleteRaid = async () => {
+    if (!window.confirm("이 방을 삭제하시겠습니까? 모든 신청 내역도 함께 삭제됩니다.")) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from("raids")
+        .delete()
+        .eq("id", raid.id);
+
+      if (error) throw error;
+
+      toast.success("방이 삭제되었습니다.");
+      if (onApplied) await onApplied();
+      if (onClose) onClose();
+    } catch (error) {
+      console.error("방 삭제 실패:", error.message);
+      toast.error("방 삭제 중 오류가 발생했습니다.");
+    }
+  };
+
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -191,13 +216,25 @@ function RaidModal({ raid, onClose, onApplied }) {
             </p>
           </div>
 
-          <button
-            type="button"
-            className="raid-modal-close-button"
-            onClick={onClose}
-          >
-            닫기
-          </button>
+          <div className="raid-modal-header-buttons">
+            <button
+              type="button"
+              className="raid-modal-close-button"
+              onClick={onClose}
+            >
+              닫기
+            </button>
+
+            {isHost && (
+              <button
+                type="button"
+                className="raid-modal-delete-button"
+                onClick={handleDeleteRaid}
+              >
+                방 삭제
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="raid-modal-description-box">

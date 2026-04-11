@@ -17,23 +17,12 @@ function Sidebar({ user, isOpen, onClose }) {
               <NavLink
                 to="/"
                 end
-                state={{ refreshHome: Date.now() }}
                 className={({ isActive }) =>
                   `app-sidebar-link ${isActive ? "is-active" : ""}`
                 }
                 onClick={onClose}
               >
-                홈
-              </NavLink>
-
-              <NavLink
-                to="/raids"
-                className={({ isActive }) =>
-                  `app-sidebar-link ${isActive ? "is-active" : ""}`
-                }
-                onClick={onClose}
-              >
-                공격대 목록
+                레이드공대 로비
               </NavLink>
 
               {user && (
@@ -56,13 +45,23 @@ function Sidebar({ user, isOpen, onClose }) {
 
               <nav className="app-sidebar-nav">
                 <NavLink
+                  to="/lobby/new"
+                  className={({ isActive }) =>
+                    `app-sidebar-link ${isActive ? "is-active" : ""}`
+                  }
+                  onClick={onClose}
+                >
+                  방 만들기
+                </NavLink>
+
+                <NavLink
                   to="/raids/new"
                   className={({ isActive }) =>
                     `app-sidebar-link ${isActive ? "is-active" : ""}`
                   }
                   onClick={onClose}
                 >
-                  공격대 생성
+                  공격대 생성 (관리자)
                 </NavLink>
 
                 <NavLink
