@@ -40,7 +40,6 @@ function LobbyCard({
 }) {
   const isFull =
     Number(raid.current_members) >= Number(raid.max_members);
-  const isDisabled = isFull && !isMyApplied;
   const isOwner = user && raid.created_by === user.id;
 
   const parties = raid.parties || [];
@@ -62,12 +61,11 @@ function LobbyCard({
     .join(" ");
 
   const handleClick = () => {
-    if (isDisabled) return;
     onClick(raid);
   };
 
   return (
-    <div className={cardClass} onClick={handleClick} role="button" tabIndex={isDisabled ? -1 : 0}>
+    <div className={cardClass} onClick={handleClick} role="button" tabIndex={0}>
       {/* 방 이름 + 시간 + 인원 */}
       <div className="lobby-card-info">
         <div className="lobby-card-name">
@@ -100,7 +98,7 @@ function LobbyCard({
             e.stopPropagation();
             handleClick();
           }}
-          disabled={isDisabled}
+
         >
           {btnLabel}
         </button>
