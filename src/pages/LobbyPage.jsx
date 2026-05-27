@@ -13,7 +13,7 @@ import RaidCreateModal from "../components/lobby/RaidCreateModal";
 import RaidEditModal from "../components/lobby/RaidEditModal";
 import "../styles/lobby.css";
 
-const RAID_TYPES = ["심연의재련: 루드라", "침식의 정화소"];
+const RAID_TYPES = ["심연의재련: 루드라", "침식의 정화소", "무스펠의 성배"];
 
 function formatDateWithDay(dateString) {
   if (!dateString) return "";

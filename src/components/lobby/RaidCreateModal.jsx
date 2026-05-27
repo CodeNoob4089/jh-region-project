@@ -107,6 +107,7 @@ function RaidCreateModal({ isOpen, onClose, onCreated }) {
               <option value="">선택해주세요</option>
               <option value="심연의재련: 루드라">심연의재련: 루드라</option>
               <option value="침식의 정화소">침식의 정화소</option>
+              <option value="무스펠의 성배">무스펠의 성배</option>
             </select>
           </div>
 
